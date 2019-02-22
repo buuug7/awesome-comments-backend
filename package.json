@@ -1,0 +1,26 @@
+{
+  "name": "awesome-comments-backend",
+  "version": "1.0.0",
+  "description": "awesome comments backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@koa/cors": "^2.2.3",
+    "dotenv": "^6.2.0",
+    "jsonwebtoken": "^8.5.0",
+    "koa": "^2.7.0",
+    "koa-body": "^4.0.8",
+    "koa-jwt": "^3.5.1",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "koa-session": "^5.10.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
