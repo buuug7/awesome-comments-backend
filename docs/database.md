@@ -11,3 +11,16 @@ create database `awesome_comments` default charset utf8mb4 collate utf8mb4_unico
 
 ```
 
+
+
+## database schema
+
+### users tables 
+
++ id
++ name
++ email
++ password
++ remember_token
++ created_at
++ updated_at
