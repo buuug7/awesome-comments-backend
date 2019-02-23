@@ -1,7 +1,7 @@
 # database
 
 ## use knex under cli
-It's have some problem when use knex migration with dotenv. the knex cli can not parse `.env` file correctly. so, i add a new npm script for solve this issue.
+There has some problem when use knex migration with dotenv. the knex cli can not parse `.env` file correctly. so, i add a new npm script for solve this issue.
 
 always use the `npm run knex ..` instead of `knex ...`
 
