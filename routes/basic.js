@@ -1,25 +1,25 @@
-const jsonWebToken = require('jsonwebtoken');
-const DB = require('../app/db');
+const jsonWebToken = require('jsonwebtoken')
+const { knex, bookshelf } = require('../app/db')
+
+const User = require('../app/models/user')
 
 module.exports = (router) => {
   router.get('/public/login', (ctx, next) => {
     const user = {
-      name: 'buuug7',
-      password: 'secret'
-    };
+      name:'buuug7',
+      password:'secret'
+    }
 
     ctx.body = {
-      token: jsonWebToken.sign(user, process.env.APP_KEY)
-    };
-  });
+      token:jsonWebToken.sign(user, process.env.APP_KEY)
+    }
+  })
 
   // getting the home route
-  router.get('/public/test', async(ctx, next) => {
+  router.get('/public/test', async (ctx, next) => {
 
-    let s = await DB.select().from('users');
+    ctx.body = await new User().fetchAll()
 
-    ctx.body = s;
+  })
 
-  });
-
-};
+}

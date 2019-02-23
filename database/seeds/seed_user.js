@@ -8,6 +8,7 @@ exports.seed = function(knex, Promise) {
       // Inserts seed entries
       return knex('users').insert([
         {id: 1, name: faker.name.findName(), email: faker.internet.email(), password: faker.internet.password()},
+        {id: 2, name: faker.name.findName(), email: faker.internet.email(), password: faker.internet.password()},
       ]);
     });
 };
