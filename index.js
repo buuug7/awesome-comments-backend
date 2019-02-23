@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const Koa = require('koa');
-const App = new Koa();
+const app = new Koa();
 const session = require('koa-session');
 const koaBody = require('koa-body');
 const jwt = require('koa-jwt');
@@ -11,13 +11,13 @@ const logger = require('koa-logger');
 const Router = require('koa-router');
 const router = new Router();
 
-App.keys = [process.env.APP_KEY];
+app.keys = [process.env.APP_KEY];
 
 // logger
-App.use(logger());
+app.use(logger());
 
 // error handling
-App.use(async(ctx, next) => {
+app.use(async(ctx, next) => {
   try {
     await next();
   } catch (err) {
@@ -28,20 +28,20 @@ App.use(async(ctx, next) => {
 });
 
 // session middleware
-App.use(session(App));
+app.use(session(app));
 
 // body parse
-App.use(koaBody());
+app.use(koaBody());
 
-App.use(cors());
+app.use(cors());
 
-// jwt
-// App.use(jwt({ secret: process.env.APP_KEY })
-//   .unless({ path: [/^\/public/] }));
+//jwt
+app.use(jwt({ secret: process.env.APP_KEY })
+  .unless({ path: [/^\/public/] }));
 
 // router
 require('./routes/router')(router);
-App.use(router.routes());
-App.use(router.allowedMethods());
+app.use(router.routes());
+app.use(router.allowedMethods());
 
-App.listen(process.env.APP_PORT);
+app.listen(process.env.APP_PORT);

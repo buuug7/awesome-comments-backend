@@ -1,19 +1,7 @@
 const jsonWebToken = require('jsonwebtoken');
+const DB = require('../app/db');
 
 module.exports = (router) => {
-  // getting the home route
-  router.get('/', (ctx, next) => {
-    // ctx.session.a =1;
-    console.log(ctx.session.a);
-
-    ctx.type = 'application/json';
-
-    ctx.body = {
-      status: 'success',
-      data: ctx.state
-    };
-  });
-
   router.get('/public/login', (ctx, next) => {
     const user = {
       name: 'buuug7',
@@ -23,6 +11,15 @@ module.exports = (router) => {
     ctx.body = {
       token: jsonWebToken.sign(user, process.env.APP_KEY)
     };
+  });
+
+  // getting the home route
+  router.get('/public/test', async(ctx, next) => {
+
+    let s = await DB.select().from('users');
+
+    ctx.body = s;
+
   });
 
 };
