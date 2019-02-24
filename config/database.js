@@ -16,7 +16,7 @@ module.exports = {
       collate: 'utf8mb4_unicode_ci'
     },
     migrations: {
-      directory: '../database/migration'
+      directory: '../database/migrations'
     },
     seeds: {
       directory: '../database/seeds'

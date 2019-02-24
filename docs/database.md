@@ -8,8 +8,6 @@ There has some problem when use knex migration with dotenv. the knex cli can not
 create database `awesome_comments` default charset utf8mb4 collate utf8mb4_unicode_ci;
 ```
 
-
-
 ## database schema
 
 ### users tables 

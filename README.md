@@ -18,6 +18,8 @@ An application where collect and share awesome comments, build on top of [koa](h
     + models
 + **config** contains all your application's configuration file
 + **database** contains your database migration and seeds
+    + migrations
+    + seeds
 + **docs** all of your applications documents
 + **routes** contains all of the route definitions for your application
 + **test** contains all your automated tests

@@ -21,9 +21,10 @@ app.use(async(ctx, next) => {
   try {
     await next();
   } catch (err) {
-    ctx.status = err.status || 500;
-    ctx.body = err.body;
-    ctx.app.emit('error', err, ctx);
+    ctx.status = err.statusCode || err.status || 500;
+    ctx.body = {
+      message: err.message
+    };
   }
 });
 
@@ -38,6 +39,8 @@ app.use(cors());
 //jwt
 app.use(jwt({ secret: process.env.APP_KEY })
   .unless({ path: [/^\/public/] }));
+
+
 
 // router
 require('./routes/router')(router);
