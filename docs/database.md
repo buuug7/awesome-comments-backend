@@ -12,7 +12,7 @@ new Book({ id: 1 }).fetch()
 Book.where({ id: 1 }).fetch()
 Book.where('favorite_color', 'red').fetch()
 Book.where('favorite_color', '<>', 'red').fetch()
-Book.query((q) => q.orderBy('updated_at')
+Book.query((q) => q.orderBy('updated_at'))
 ```
 
 ## create database
@@ -22,12 +22,25 @@ create database `awesome_comments` default charset utf8mb4 collate utf8mb4_unico
 
 ## database schema
 
-### users tables 
+### tables
++ users 
+    + id
+    + name
+    + email
+    + password
+    + remember_token
+    + created_at
+    + updated_at
 
-+ id
-+ name
-+ email
-+ password
-+ remember_token
-+ created_at
-+ updated_at
++ awesome_comments
+    + id
+    + user_id
+    + content
+    + reference
+    + active
+    + deleted_at
+    + created_at
+    + updated_at
+    
+### table relations
+one user may have many awesome_comments, inverse one awesome_comment only belongs to one user.  
