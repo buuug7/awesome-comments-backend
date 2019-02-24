@@ -1,5 +1,6 @@
 const jsonWebToken = require('jsonwebtoken')
 const User = require('../models/User')
+const AwesomeComment = require('../models/AwesomeComment')
 
 // login
 const login = (ctx, next) => {
@@ -23,7 +24,15 @@ const login = (ctx, next) => {
 }
 
 const test = async (ctx, next) => {
-  ctx.body = await new User().fetchAll()
+ let t = await User.where({id:1}).fetch({
+   withRelated:[{
+     awesomeComments: function (q) {
+       q.limit(2)
+     }
+   }]
+ })
+
+  ctx.body = t;
 }
 
 module.exports = { login, test }
