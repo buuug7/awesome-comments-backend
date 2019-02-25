@@ -5,8 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon",
+    "test": "jest --detectOpenHandles",
     "debug": "DEBUG=koa* node --harmony index.js",
     "knex": "node -r dotenv/config ./node_modules/knex/bin/cli.js --knexfile config/database.js"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "keywords": [],
   "author": "",
@@ -28,6 +32,8 @@
     "mysql": "^2.16.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.10"
+    "jest": "^24.1.0",
+    "nodemon": "^1.18.10",
+    "supertest": "^3.4.2"
   }
 }

@@ -23,16 +23,16 @@ const login = (ctx, next) => {
   }
 }
 
-const test = async (ctx, next) => {
- let t = await User.where({id:1}).fetch({
-   withRelated:[{
-     awesomeComments: function (q) {
-       q.limit(2)
-     }
-   }]
- })
+const test = async(ctx, next) => {
+  let t = await User.where({ id: 1 }).fetch({
+    withRelated: [{
+      awesomeComments: function (q) {
+        q.limit(2)
+      }
+    }]
+  })
 
-  ctx.body = t;
+  ctx.body = t
 }
 
 module.exports = { login, test }
