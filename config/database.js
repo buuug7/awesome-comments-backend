@@ -1,7 +1,6 @@
 // Update with your config settings.
 
-require('dotenv').config();
-
+require('dotenv').config()
 
 module.exports = {
 
@@ -20,7 +19,8 @@ module.exports = {
     },
     seeds: {
       directory: '../database/seeds'
-    }
+    },
+    debug: true
   }
 
-};
+}

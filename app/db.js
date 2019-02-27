@@ -7,6 +7,6 @@ const config = require('../config/database')
 const knexInstance = knex(config[process.env.APP_ENV])
 
 module.exports = {
-  knex:knexInstance,
-  bookshelf:bookshelf(knexInstance)
+  knex: knexInstance,
+  bookshelf: bookshelf(knexInstance).plugin(['pagination', 'registry', 'Visibility'])
 }

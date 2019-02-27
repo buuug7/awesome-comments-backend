@@ -1,11 +1,16 @@
-const { bookshelf } = require('../DB')
+const { bookshelf } = require('../db')
 
 const User = require('./User')
 
-module.exports = bookshelf.Model.extend({
+const AwesomeComment = bookshelf.Model.extend({
   tableName: 'awesome_comments',
 
   user: function () {
-    return this.belongsTo(User)
+    return this.belongsTo('User')
   },
+
+  // hidden: ['deleted_at']
+
 })
+
+module.exports = bookshelf.model('AwesomeComment', AwesomeComment)

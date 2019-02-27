@@ -37,8 +37,7 @@ app.use(koaBody())
 app.use(cors())
 
 //jwt
-app.use(jwt({ secret: process.env.APP_KEY })
-  .unless({ path: [/^\/public/] }));
+// app.use(jwt({ secret: process.env.APP_KEY }).unless({ path: [/^\/public/] }));
 
 // router
 require('./routes/router')(router)

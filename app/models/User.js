@@ -1,11 +1,13 @@
-const { bookshelf } = require('../DB')
+const { bookshelf } = require('../db')
 
 const AwesomeComment = require('./AwesomeComment')
 
-module.exports = bookshelf.Model.extend({
+const User = bookshelf.Model.extend({
   tableName: 'users',
 
   awesomeComments: function () {
     return this.hasMany(AwesomeComment)
   }
 })
+
+module.exports = bookshelf.model('User', User)
