@@ -1,4 +1,4 @@
-const { list, show, create, update, destroy } = require('../app/controllers/AwesomeCommentController')
+const { list, show, create, update, destroy, star } = require('../app/controllers/AwesomeCommentController')
 
 module.exports = (router) => {
   // get list
@@ -11,4 +11,6 @@ module.exports = (router) => {
   router.put('/awesome-comments/:id', update)
   // delete one
   router.del('/awesome-comments/:id', destroy);
+  // user star specified one
+  router.post('/awesome-comments/:id/star', star);
 }

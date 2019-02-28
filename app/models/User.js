@@ -6,7 +6,11 @@ const User = bookshelf.Model.extend({
   tableName: 'users',
 
   awesomeComments: function () {
-    return this.hasMany(AwesomeComment)
+    return this.hasMany('AwesomeComment')
+  },
+
+  starAwesomeComments: function () {
+    return this.belongsToMany('AwesomeComment','awesome_comment_user_stars')
   }
 })
 

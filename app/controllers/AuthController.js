@@ -1,17 +1,29 @@
 const jsonWebToken = require('jsonwebtoken')
 const User = require('../models/User')
 const AwesomeComment = require('../models/AwesomeComment')
+const bcrypt = require('bcrypt')
 
 // login
-const login = (ctx, next) => {
-  const user = ctx.request.body
+const login = async(ctx, next) => {
+  const requestData = ctx.request.body
 
-  if (user.password === '123456') {
+  let user = await User.where({ email: requestData.email }).fetch()
+
+  if (!user) {
+    ctx.status = 401
+    return ctx.body = {
+      message: `Not exists a email with ${requestData.email}, did you already registry it?`
+    }
+  }
+
+  if (bcrypt.compareSync(requestData.password, user.get('password'))) {
     return ctx.body = {
       token: jsonWebToken.sign({
         exp: Math.floor(Date.now() / 1000) + (60 * 10),
         user: {
-          username: user.name,
+          name: user.get('name'),
+          email: user.get('email'),
+          id: user.get('id')
         },
       }, process.env.APP_KEY),
     }

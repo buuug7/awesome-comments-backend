@@ -1,6 +1,9 @@
 const AwesomeComment = require('../models/AwesomeComment')
+const User = require('../models/User')
 const dayjs = require('dayjs')
 const { addPreAndNextPageUrlToPagination } = require('../pagination')
+
+const { knex } = require('../db')
 
 /**
  * Display a listing of the resource
@@ -84,7 +87,39 @@ async function destroy (ctx, next) {
   ctx.body = {
     data: rs
   }
-
 }
 
-module.exports = { list, show, create, update, destroy }
+/**
+ * Star the specified resource
+ * POST /awesome-comments/:id/star
+ * @return array
+ */
+async function star (ctx, next) {
+
+  const userId = ctx.state.user.user.id
+
+  const instance = new AwesomeComment({ id: ctx.params.id })
+
+  let isStared = await instance.hasStarByGivenUser(userId)
+
+  if (isStared) {
+    ctx.status = 403
+    return ctx.body = {
+      message: 'the resource already star'
+    }
+  }
+
+  await instance.starUsers().attach(userId)
+
+  let starCount = await knex('awesome_comment_user_stars').where({
+    awesome_comment_id: ctx.params.id
+  }).count('* as c')
+
+  ctx.body = {
+    data: {
+      count: starCount[0].c
+    }
+  }
+}
+
+module.exports = { list, show, create, update, destroy, star }
