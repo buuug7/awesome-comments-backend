@@ -8,5 +8,5 @@ const knexInstance = knex(config[process.env.APP_ENV])
 
 module.exports = {
   knex: knexInstance,
-  bookshelf: bookshelf(knexInstance).plugin(['pagination', 'registry', 'Visibility'])
+  bookshelf: bookshelf(knexInstance).plugin(['pagination', 'registry', 'Visibility','virtuals'])
 }

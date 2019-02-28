@@ -15,14 +15,15 @@ async function list (ctx, next) {
 
   const lists = await AwesomeComment.fetchPage({
     page: q.page || 1,
-    pageSize: q.pageSize || 5
+    pageSize: q.pageSize || 5,
   })
 
-  const pagination = addPreAndNextPageUrlToPagination(lists.pagination, ctx.request.path)
+  const pagination = addPreAndNextPageUrlToPagination(lists.pagination,
+    ctx.request.path)
 
   ctx.body = {
     ...pagination,
-    data: lists.toJSON()
+    data: lists.toJSON(),
   }
 }
 
@@ -33,7 +34,7 @@ async function list (ctx, next) {
  */
 async function show (ctx, next) {
   ctx.body = {
-    data: await AwesomeComment.where({ id: ctx.params.id }).fetch()
+    data: await AwesomeComment.where({ id: ctx.params.id }).fetch(),
   }
 }
 
@@ -50,11 +51,11 @@ async function create (ctx, next) {
     user_id: requestBody.user_id,
     content: requestBody.content,
     reference: requestBody.reference,
-    created_at: requestBody.created_at
+    created_at: requestBody.created_at,
   }).save()
 
   ctx.body = {
-    data: instance.toJSON()
+    data: instance.toJSON(),
   }
 }
 
@@ -67,10 +68,11 @@ async function update (ctx, next) {
   const requestBody = ctx.request.body
   const id = ctx.params.id
 
-  const instance = await AwesomeComment.where({ id: id }).save(requestBody, { patch: true })
+  const instance = await AwesomeComment.where({ id: id }).
+    save(requestBody, { patch: true })
 
   ctx.body = {
-    data: instance.toJSON()
+    data: instance.toJSON(),
   }
 }
 
@@ -81,45 +83,63 @@ async function update (ctx, next) {
  */
 async function destroy (ctx, next) {
   const id = ctx.params.id
-
   const rs = await AwesomeComment.where({ id: id }).destroy()
 
   ctx.body = {
-    data: rs
+    data: rs,
   }
 }
 
 /**
  * Star the specified resource
+ * return the start count number
  * POST /awesome-comments/:id/star
- * @return array
+ * @return {object}
  */
 async function star (ctx, next) {
 
   const userId = ctx.state.user.user.id
-
   const instance = new AwesomeComment({ id: ctx.params.id })
-
-  let isStared = await instance.hasStarByGivenUser(userId)
+  const isStared = await instance.hasStarByGivenUser(userId)
 
   if (isStared) {
     ctx.status = 403
     return ctx.body = {
-      message: 'the resource already star'
+      message: 'oops, the resource already star',
     }
   }
 
   await instance.starUsers().attach(userId)
 
-  let starCount = await knex('awesome_comment_user_stars').where({
-    awesome_comment_id: ctx.params.id
-  }).count('* as c')
+  let count = await instance.starUsersCount()
 
   ctx.body = {
-    data: {
-      count: starCount[0].c
-    }
+    data: { count: count },
   }
 }
 
-module.exports = { list, show, create, update, destroy, star }
+/**
+ * Unstar the specified resource
+ * return the star count number
+ * @return {object}
+ */
+async function unstar (ctx, next) {
+  const userId = ctx.state.user.user.id
+  const instance = new AwesomeComment({ id: ctx.params.id })
+  await instance.starUsers().detach(userId)
+  let count = await instance.starUsersCount()
+
+  ctx.body = {
+    data: { count: count },
+  }
+}
+
+async function starCount () {
+
+}
+
+async function is(){
+
+}
+
+module.exports = { list, show, create, update, destroy, star, unstar }
