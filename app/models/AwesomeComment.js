@@ -28,7 +28,7 @@ const AwesomeComment = bookshelf.Model.extend({
 
   // serialize () {
   //   return Object.assign({}, this.attributes, {
-  //     someCustomAttribute: 1,
+  //     someCustomAttribute: 1232
   //   })
   // },
 

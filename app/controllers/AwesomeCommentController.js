@@ -33,8 +33,9 @@ async function list (ctx, next) {
  * @return {AwesomeComment}
  */
 async function show (ctx, next) {
+  const instance = await AwesomeComment.where({ id: ctx.params.id }).fetch();
   ctx.body = {
-    data: await AwesomeComment.where({ id: ctx.params.id }).fetch(),
+    data: instance,
   }
 }
 
