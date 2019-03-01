@@ -1,26 +1,23 @@
-// Update with your config settings.
-
 require('dotenv').config()
 
+/*
+* database config
+* */
+
 module.exports = {
-
   development: {
-    client: 'mysql',
-    connection: {
-      host: process.env.DB_HOST,
-      database: process.env.DB_DATABASE,
-      user: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      charset: 'utf8mb4',
-      collate: 'utf8mb4_unicode_ci'
-    },
-    migrations: {
-      directory: '../database/migrations'
-    },
-    seeds: {
-      directory: '../database/seeds'
-    },
-    debug: true
-  }
+    database: process.env.DB_DATABASE,
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    host: process.env.DB_HOST,
+    dialect: process.env.DB_CONNECTION,
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    }
+  },
 
+  production: {}
 }
