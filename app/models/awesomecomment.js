@@ -1,4 +1,3 @@
-'use strict';
 module.exports = (sequelize, DataTypes) => {
   const AwesomeComment = sequelize.define('AwesomeComment', {
     userId: DataTypes.INTEGER,
