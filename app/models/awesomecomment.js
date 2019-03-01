@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
   AwesomeComment.associate = function(models) {
     // associations can be defined here
     models.AwesomeComment.belongsTo(models.User)
-    models.
+    // models.
   };
   return AwesomeComment;
 };

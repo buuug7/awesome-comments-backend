@@ -1,18 +1,21 @@
 const jsonWebToken = require('jsonwebtoken')
-const User = require('../models/User')
-const AwesomeComment = require('../models/AwesomeComment')
 const bcrypt = require('bcrypt')
 
+const { User } = require('../models/index')
+
 // login
-const login = async(ctx, next) => {
+const login = async (ctx, next) => {
   const requestData = ctx.request.body
 
-  let user = await User.where({ email: requestData.email }).fetch()
+  let user = await User.findOne({
+    where: { email: requestData.email },
+    attributes: ['password'],
+  })
 
   if (!user) {
     ctx.status = 401
     return ctx.body = {
-      message: `Not exists a email with ${requestData.email}, did you already registry it?`
+      message: `Not exists a email with ${requestData.email}, did you already registry it?`,
     }
   }
 
@@ -23,7 +26,7 @@ const login = async(ctx, next) => {
         user: {
           name: user.get('name'),
           email: user.get('email'),
-          id: user.get('id')
+          id: user.get('id'),
         },
       }, process.env.APP_KEY),
     }
@@ -35,16 +38,4 @@ const login = async(ctx, next) => {
   }
 }
 
-const test = async(ctx, next) => {
-  let t = await User.where({ id: 1 }).fetch({
-    withRelated: [{
-      awesomeComments: function (q) {
-        q.limit(2)
-      }
-    }]
-  })
-
-  ctx.body = t
-}
-
-module.exports = { login, test }
+module.exports = { login }
