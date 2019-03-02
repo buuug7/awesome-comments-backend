@@ -6,8 +6,7 @@
   "scripts": {
     "start": "nodemon",
     "test": "jest --forceExit",
-    "debug": "DEBUG=koa* node --harmony index.js",
-    "knex": "node -r dotenv/config ./node_modules/knex/bin/cli.js --knexfile config/database.js"
+    "debug": "DEBUG=koa* node --harmony index.js"
   },
   "jest": {
     "testEnvironment": "node"
@@ -16,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/polyfill": "^7.2.5",
     "@koa/cors": "^2.2.3",
     "bcrypt": "^3.0.4",
     "dayjs": "^1.8.8",

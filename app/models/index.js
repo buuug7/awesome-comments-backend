@@ -9,4 +9,6 @@ Object.keys(models).forEach(key => {
   models[key].associate(models)
 })
 
-module.exports = { ...models, sequelize }
+models['sequelize'] = sequelize
+
+module.exports = models
