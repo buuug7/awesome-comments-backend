@@ -3,11 +3,13 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    remember_token: DataTypes.STRING
-  }, {});
-  User.associate = function(models) {
+    remember_token: DataTypes.STRING,
+  }, {})
+  User.associate = function (models) {
     // associations can be defined here
     models.User.hasMany(models.AwesomeComment)
-  };
-  return User;
-};
+    models.User.belongsToMany(models.AwesomeComment,
+      { as: 'starAwesomeComments', through: 'AwesomeCommentUserStars' })
+  }
+  return User
+}

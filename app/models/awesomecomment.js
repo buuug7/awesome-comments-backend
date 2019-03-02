@@ -5,11 +5,15 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER,
     content: DataTypes.TEXT,
     reference: DataTypes.STRING,
-    active: DataTypes.BOOLEAN
-  }, {})
+    active: DataTypes.BOOLEAN,
+  }, {
+    paranoid: true,
+  })
   AwesomeComment.associate = function (models) {
     // associations can be defined here
-    models.AwesomeComment.belongsTo(models.User)
+    // models.AwesomeComment.belongsTo(models.User)
+    // models.AwesomeComment.belongsToMany(models.User,
+    //   { as: 'starUsers', through: 'AwesomeCommentUserStars' })
   }
 
   AwesomeComment.simplePaginate = simplePaginate

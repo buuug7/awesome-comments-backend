@@ -48,30 +48,31 @@ describe('test AwesomeCommentController', () => {
   })
 
   test('PUT /awesome-comments/:id', async() => {
-    const response = await request(app.callback()).put('/awesome-comments/1').set('Authorization', `Bearer ${token}`).send({
+    const response = await request(app.callback()).put('/awesome-comments/2').set('Authorization', `Bearer ${token}`).send({
       content: 'from test2',
-      created_at: dayjs().format('YYYY-MM-DD HH:mm:ss'),
     })
 
+    console.log(JSON.stringify(response.body))
+
     expect(response.status).toBe(200)
-    expect(response.body.data).toHaveProperty('content')
-    expect(response.body.data).toHaveProperty('created_at')
+    expect(response.body.data[0]).toBeGreaterThan(0)
   })
 
   test('DELETE /awesome-comments/:id', async() => {
     const firstCreate = async() => {
       return await request(app.callback()).post('/awesome-comments').set('Authorization', `Bearer ${token}`).send({
-        user_id: 1,
+        userId: 1,
         content: 'created from test delete test',
         reference: faker.internet.url(),
-        created_at: dayjs().format('YYYY-MM-DD HH:mm:ss'),
       })
     }
 
     const res = await firstCreate()
     const response = await request(app.callback()).delete('/awesome-comments/' + res.body.data.id).set('Authorization', `Bearer ${token}`)
+    
+    console.log(JSON.stringify(response.body))
     expect(response.status).toBe(200)
-    expect(response.body.data).toEqual({})
+    expect(response.body.data).toBe(1)
 
   })
 

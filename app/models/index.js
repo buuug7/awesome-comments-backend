@@ -9,6 +9,17 @@ Object.keys(models).forEach(key => {
   models[key].associate(models)
 })
 
+// models.User.findOne({
+//   where: { id: 1 },
+//   include: [{
+//     model:'starAwesomeComments'
+//   }]
+// }).then(res => console.log(JSON.stringify(res)))
+
+// models.User.sync()
+models.AwesomeComment.sync()
+
+return
 models['sequelize'] = sequelize
 
 module.exports = models

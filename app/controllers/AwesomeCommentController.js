@@ -4,7 +4,7 @@ const { AwesomeComment } = require('../models/index.js')
 /**
  * Display a listing of the resource
  * GET /awesome-comments
- * @return array
+ * @return {array}
  */
 async function list (ctx, next) {
 
@@ -15,7 +15,7 @@ async function list (ctx, next) {
 
   ctx.body = await AwesomeComment.simplePaginate({
     baseUrl: ctx.request.path,
-    currentPage: q.page || 1
+    currentPage: q.page || 1,
   })
 }
 
@@ -26,7 +26,7 @@ async function list (ctx, next) {
  */
 async function show (ctx, next) {
   const instance = await AwesomeComment.findOne({
-    where: { id: ctx.params.id }
+    where: { id: ctx.params.id },
   })
 
   ctx.body = {
@@ -47,11 +47,10 @@ async function create (ctx, next) {
     userId: requestBody.userId,
     content: requestBody.content,
     reference: requestBody.reference,
-    // createdAt: dayjs().format('YYYY-MM-DD HH:mm:ss')
   })
 
   ctx.body = {
-    data: instance.toJSON(),
+    data: instance,
   }
 }
 
@@ -61,15 +60,16 @@ async function create (ctx, next) {
  * @return {object}
  */
 async function update (ctx, next) {
-  // const requestBody = ctx.request.body
-  // const id = ctx.params.id
-  //
-  // const instance = await AwesomeComment.where({ id: id }).
-  //   save(requestBody, { patch: true })
-  //
-  // ctx.body = {
-  //   data: instance.toJSON(),
-  // }
+  const requestBody = ctx.request.body
+  const id = ctx.params.id
+
+  const instance = await AwesomeComment.update(requestBody, {
+    where: { id: id },
+  })
+
+  ctx.body = {
+    data: instance,
+  }
 }
 
 /**
@@ -78,12 +78,14 @@ async function update (ctx, next) {
  * @return array
  */
 async function destroy (ctx, next) {
-  // const id = ctx.params.id
-  // const rs = await AwesomeComment.where({ id: id }).destroy()
-  //
-  // ctx.body = {
-  //   data: rs,
-  // }
+  const id = ctx.params.id
+  const rs = await AwesomeComment.destroy({
+    where: { id: id },
+  })
+
+  ctx.body = {
+    data: rs,
+  }
 }
 
 /**
