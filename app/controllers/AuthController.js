@@ -4,12 +4,12 @@ const bcrypt = require('bcrypt')
 const { User } = require('../models/index')
 
 // login
-const login = async (ctx, next) => {
+const login = async(ctx, next) => {
   const requestData = ctx.request.body
 
   let user = await User.findOne({
     where: { email: requestData.email },
-    attributes: ['password'],
+    attributes: ['id', 'name', 'email', 'password'],
   })
 
   if (!user) {
@@ -19,14 +19,14 @@ const login = async (ctx, next) => {
     }
   }
 
-  if (bcrypt.compareSync(requestData.password, user.get('password'))) {
+  if (bcrypt.compareSync(requestData.password, user.password)) {
     return ctx.body = {
       token: jsonWebToken.sign({
         exp: Math.floor(Date.now() / 1000) + (60 * 10),
         user: {
-          name: user.get('name'),
-          email: user.get('email'),
-          id: user.get('id'),
+          name: user.name,
+          email: user.email,
+          id: user.id,
         },
       }, process.env.APP_KEY),
     }

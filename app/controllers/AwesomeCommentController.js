@@ -1,8 +1,8 @@
 const dayjs = require('dayjs')
-const { AwesomeComment } = require('../models/index.js')
+const { AwesomeComment, User } = require('../models/index.js')
 
 /**
- * Display a listing of the resource
+ * Get a listing of the resource
  * GET /awesome-comments
  * @return {array}
  */
@@ -20,17 +20,23 @@ async function list (ctx, next) {
 }
 
 /**
- * Display the specified resource
+ * Get the specified resource
  * GET /awesome-comments/:id
  * @return {AwesomeComment}
  */
 async function show (ctx, next) {
+  const userId = ctx.state.user.user.id
+
   const instance = await AwesomeComment.findOne({
     where: { id: ctx.params.id },
   })
 
   ctx.body = {
-    data: instance,
+    data: {
+      ...instance.getData(),
+      hasOwnedByRequestUser: await instance.hasOwnedByGiveUser(userId)
+    },
+    extra: { hasOwnedByRequestUser: await instance.hasOwnedByGiveUser(userId) }
   }
 }
 
@@ -75,7 +81,7 @@ async function update (ctx, next) {
 /**
  * Remove the specified resource from storage
  * DELETE /awesome-comments/:id
- * @return array
+ * @return {object}
  */
 async function destroy (ctx, next) {
   const id = ctx.params.id
@@ -96,48 +102,67 @@ async function destroy (ctx, next) {
  */
 async function star (ctx, next) {
 
-  // const userId = ctx.state.user.user.id
-  // const instance = new AwesomeComment({ id: ctx.params.id })
-  // const isStared = await instance.hasStarByGivenUser(userId)
-  //
-  // if (isStared) {
-  //   ctx.status = 403
-  //   return ctx.body = {
-  //     message: 'oops, the resource already star',
-  //   }
-  // }
-  //
-  // await instance.starUsers().attach(userId)
-  //
-  // let count = await instance.starUsersCount()
-  //
-  // ctx.body = {
-  //   data: { count: count },
-  // }
+  const userId = ctx.state.user.user.id
+
+  const instance = await AwesomeComment.findOne({
+    where: { id: ctx.params.id }
+  })
+
+  const rs = await instance.addStarUser(userId)
+
+  if (!rs) {
+    ctx.status = 403
+    return ctx.body = {
+      message: 'oops, there is something wrong while star, perhaps it was already stared'
+    }
+  }
+
+  ctx.body = {
+    data: { count: await instance.countStarUsers() }
+  }
+
 }
 
 /**
- * Unstar the specified resource
+ * unStar the specified resource
  * return the star count number
  * @return {object}
  */
-async function unstar (ctx, next) {
-  // const userId = ctx.state.user.user.id
-  // const instance = new AwesomeComment({ id: ctx.params.id })
-  // await instance.starUsers().detach(userId)
-  // let count = await instance.starUsersCount()
-  //
-  // ctx.body = {
-  //   data: { count: count },
-  // }
+async function unStar (ctx, next) {
+  const userId = ctx.state.user.user.id
+  const instance = await AwesomeComment.findOne({
+    where: { id: ctx.params.id }
+  })
+
+  const rs = await instance.removeStarUser(userId)
+
+  if (!rs) {
+    ctx.status = 403
+    ctx.body = {
+      message: 'oops, there is something wrong while unstar, perhaps it was already unstared.'
+    }
+  }
+
+  ctx.body = {
+    data: await instance.countStarUsers(),
+  }
 }
 
-async function starCount () {
+/**
+ * Get the star count of specified resource
+ * @return {object}
+ */
+async function starCount (ctx, next) {
 
+  const instance = await AwesomeComment.findOne({
+    where: { id: ctx.params.id }
+  })
+
+  ctx.body = {
+    data: {
+      count: await instance.countStarUsers()
+    }
+  }
 }
 
-async function is () {
-
-}
-
-module.exports = { list, show, create, update, destroy, star, unstar }
+module.exports = { list, show, create, update, destroy, star, unStar, starCount }

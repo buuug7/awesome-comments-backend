@@ -21,7 +21,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      remember_token: {
+      rememberToken: {
         type: Sequelize.STRING
       },
       createdAt: {

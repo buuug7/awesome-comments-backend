@@ -1,18 +1,29 @@
-const { list, show, create, update, destroy, star, unstar } = require('../app/controllers/AwesomeCommentController')
+const {
+  list,
+  show,
+  create,
+  update,
+  destroy,
+  star,
+  unStar,
+  starCount
+} = require('../app/controllers/AwesomeCommentController')
 
 module.exports = (router) => {
-  // get list
+  // Get a listing of the resource
   router.get('/awesome-comments', list)
-  // get specified resource
+  // Get the specified resource
   router.get('/awesome-comments/:id', show)
-  // create resource
+  // Store a newly created resource in storage
   router.post('/awesome-comments', create)
-  // update specified resource
+  // Update the specified resource in storage
   router.put('/awesome-comments/:id', update)
-  // delete resource
-  router.del('/awesome-comments/:id', destroy);
-  // user star specified resource
-  router.post('/awesome-comments/:id/star', star);
-  // unStar specified resource
-  router.post('/awesome-comments/:id/unstar', unstar)
+  // Remove the specified resource from storage
+  router.del('/awesome-comments/:id', destroy)
+  // Star the specified resource
+  router.post('/awesome-comments/:id/star', star)
+  // unStar the specified resource
+  router.post('/awesome-comments/:id/unstar', unStar)
+  // Get the star count of specified resource
+  router.get('/awesome-comments/:id/starcount', starCount)
 }
