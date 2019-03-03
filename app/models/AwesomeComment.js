@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       id: {
         type: DataTypes.INTEGER,
-        primaryKey: true
+        primaryKey: true,
       },
       UserId: DataTypes.INTEGER,
       content: DataTypes.TEXT,
@@ -17,23 +17,37 @@ module.exports = (sequelize, DataTypes) => {
       deletedAt: DataTypes.DATE,
 
       // virtual fields
-      // author: {
-      //   type: DataTypes.VIRTUAL,
-      //   get: async function () {
-      //     return 'buuug7'
-      //   }
-      // }
+      author: {
+        type: DataTypes.VIRTUAL,
+        get: function () {
+          return 'buuug7'
+        },
+      },
     },
     {
       paranoid: true,
-    }
+      hooks: {
+        afterFind: async function (models, options) {
+
+          console.log(options)
+          if (!models.length) {
+            models = [models]
+          }
+
+          models.forEach(async function (model) {
+            let s = await model.hasOwnedByGiveUser(2)
+            model.setDataValue('has', s)
+          })
+        },
+      },
+    },
   )
   AwesomeComment.associate = function (models) {
     models.AwesomeComment.belongsTo(models.User)
     models.AwesomeComment.belongsToMany(models.User,
       {
         as: { singular: 'StarUser', plural: 'StarUsers' },
-        through: models.AwesomeCommentUserStar
+        through: models.AwesomeCommentUserStar,
       })
   }
 

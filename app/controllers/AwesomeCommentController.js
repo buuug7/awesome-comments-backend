@@ -25,7 +25,7 @@ async function list (ctx, next) {
  * @return {AwesomeComment}
  */
 async function show (ctx, next) {
-  const userId = ctx.state.user.user.id
+  const userId = ctx.state.user ? ctx.state.user.user.id : null
 
   const instance = await AwesomeComment.findOne({
     where: { id: ctx.params.id },
@@ -33,10 +33,8 @@ async function show (ctx, next) {
 
   ctx.body = {
     data: {
-      ...instance.getData(),
-      hasOwnedByRequestUser: await instance.hasOwnedByGiveUser(userId)
+      ...instance.toJSON(),
     },
-    extra: { hasOwnedByRequestUser: await instance.hasOwnedByGiveUser(userId) }
   }
 }
 
@@ -105,7 +103,7 @@ async function star (ctx, next) {
   const userId = ctx.state.user.user.id
 
   const instance = await AwesomeComment.findOne({
-    where: { id: ctx.params.id }
+    where: { id: ctx.params.id },
   })
 
   const rs = await instance.addStarUser(userId)
@@ -113,12 +111,12 @@ async function star (ctx, next) {
   if (!rs) {
     ctx.status = 403
     return ctx.body = {
-      message: 'oops, there is something wrong while star, perhaps it was already stared'
+      message: 'oops, there is something wrong while star, perhaps it was already stared',
     }
   }
 
   ctx.body = {
-    data: { count: await instance.countStarUsers() }
+    data: { count: await instance.countStarUsers() },
   }
 
 }
@@ -131,7 +129,7 @@ async function star (ctx, next) {
 async function unStar (ctx, next) {
   const userId = ctx.state.user.user.id
   const instance = await AwesomeComment.findOne({
-    where: { id: ctx.params.id }
+    where: { id: ctx.params.id },
   })
 
   const rs = await instance.removeStarUser(userId)
@@ -139,7 +137,7 @@ async function unStar (ctx, next) {
   if (!rs) {
     ctx.status = 403
     ctx.body = {
-      message: 'oops, there is something wrong while unstar, perhaps it was already unstared.'
+      message: 'oops, there is something wrong while unstar, perhaps it was already unstared.',
     }
   }
 
@@ -155,14 +153,23 @@ async function unStar (ctx, next) {
 async function starCount (ctx, next) {
 
   const instance = await AwesomeComment.findOne({
-    where: { id: ctx.params.id }
+    where: { id: ctx.params.id },
   })
 
   ctx.body = {
     data: {
-      count: await instance.countStarUsers()
-    }
+      count: await instance.countStarUsers(),
+    },
   }
 }
 
-module.exports = { list, show, create, update, destroy, star, unStar, starCount }
+module.exports = {
+  list,
+  show,
+  create,
+  update,
+  destroy,
+  star,
+  unStar,
+  starCount,
+}
