@@ -26,5 +26,3 @@ An application where collect and share awesome comments, build on top of [koa](h
 
 
 ## TODO
-+ add TEST
-+ add ORM [bookshelf]
