@@ -11,12 +11,10 @@ async function list (ctx, next) {
   /** @type {{page:number}} */
   const q = ctx.request.query
 
-  console.log(q)
-
   ctx.body = await AwesomeComment.simplePaginate({
     baseUrl: ctx.request.path,
     currentPage: q.page || 1,
-  })
+  }, { ctx: ctx })
 }
 
 /**
@@ -25,16 +23,16 @@ async function list (ctx, next) {
  * @return {AwesomeComment}
  */
 async function show (ctx, next) {
-  const userId = ctx.state.user ? ctx.state.user.user.id : null
+
+  const userId = ctx.state.user ? ctx.state.user.id : null
 
   const instance = await AwesomeComment.findOne({
     where: { id: ctx.params.id },
+    ctx: ctx
   })
 
   ctx.body = {
-    data: {
-      ...instance.toJSON(),
-    },
+    data: instance,
   }
 }
 
@@ -47,8 +45,10 @@ async function create (ctx, next) {
 
   const requestBody = ctx.request.body
 
+  // TODO: validate
+
   const instance = await AwesomeComment.create({
-    userId: requestBody.userId,
+    UserId: requestBody.UserId,
     content: requestBody.content,
     reference: requestBody.reference,
   })
@@ -87,6 +87,8 @@ async function destroy (ctx, next) {
     where: { id: id },
   })
 
+  console.log(rs)
+
   ctx.body = {
     data: rs,
   }
@@ -100,7 +102,7 @@ async function destroy (ctx, next) {
  */
 async function star (ctx, next) {
 
-  const userId = ctx.state.user.user.id
+  const userId = ctx.state.user.id
 
   const instance = await AwesomeComment.findOne({
     where: { id: ctx.params.id },
@@ -127,7 +129,7 @@ async function star (ctx, next) {
  * @return {object}
  */
 async function unStar (ctx, next) {
-  const userId = ctx.state.user.user.id
+  const userId = ctx.state.user.id
   const instance = await AwesomeComment.findOne({
     where: { id: ctx.params.id },
   })

@@ -38,7 +38,7 @@ describe('test AwesomeCommentController', () => {
     const response = await request(app.callback())
       .post('/awesome-comments')
       .set('Authorization', `Bearer ${token}`).send({
-        userId: 1,
+        UserId: 1,
         content: faker.lorem.paragraph(),
         reference: faker.internet.url(),
       })
@@ -48,7 +48,7 @@ describe('test AwesomeCommentController', () => {
   })
 
   test('PUT /awesome-comments/:id', async() => {
-    const response = await request(app.callback()).put('/awesome-comments/2').set('Authorization', `Bearer ${token}`).send({
+    const response = await request(app.callback()).put('/awesome-comments/1').set('Authorization', `Bearer ${token}`).send({
       content: 'from test2',
     })
 
@@ -61,16 +61,20 @@ describe('test AwesomeCommentController', () => {
   test('DELETE /awesome-comments/:id', async() => {
     const firstCreate = async() => {
       return await request(app.callback()).post('/awesome-comments').set('Authorization', `Bearer ${token}`).send({
-        userId: 1,
+        UserId: 1,
         content: 'created from test delete test',
         reference: faker.internet.url(),
       })
     }
 
     const res = await firstCreate()
+
+    console.log(res.body)
+
     const response = await request(app.callback()).delete('/awesome-comments/' + res.body.data.id).set('Authorization', `Bearer ${token}`)
 
     console.log(JSON.stringify(response.body))
+
     expect(response.status).toBe(200)
     expect(response.body.data).toBe(1)
 

@@ -5,8 +5,10 @@ module.exports = (sequelize, DataTypes) => {
   const AwesomeComment = sequelize.define('AwesomeComment',
     {
       id: {
-        type: DataTypes.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
+        type: DataTypes.INTEGER
       },
       UserId: DataTypes.INTEGER,
       content: DataTypes.TEXT,
@@ -27,17 +29,43 @@ module.exports = (sequelize, DataTypes) => {
     {
       paranoid: true,
       hooks: {
-        afterFind: async function (models, options) {
 
-          console.log(options)
+        /**
+         * Add more columns to output at afterFind hooks
+         * @param models
+         * @param {{ctx:object,...}} options
+         */
+        afterFind: async function (models, options) {
+          let userId = null
+
+          if (!options.ctx) {
+            return
+          }
+
+          if (options.ctx.state.user) {
+            userId = options.ctx.state.user.id
+          }
+
           if (!models.length) {
             models = [models]
           }
 
+          let asyncOperations = []
+
           models.forEach(async function (model) {
-            let s = await model.hasOwnedByGiveUser(2)
-            model.setDataValue('has', s)
+            // sync
+            // attach `hasOwnedByRequestUser` to the result
+            model.setDataValue('hasOwnedByRequestUser', model.hasOwnedByGivenUser(userId))
+
+            // below is async operation
+            // put async operation to asyncOperation array
+
+            // set hasStarByRequestUser
+            let hasStarByRequestUserCallback = model.hasStarUser(userId).then(res => model.setDataValue('hasStarByRequestUser', res))
+            asyncOperations.push(hasStarByRequestUserCallback)
           })
+
+          return Promise.all(asyncOperations)
         },
       },
     },
@@ -54,12 +82,21 @@ module.exports = (sequelize, DataTypes) => {
   AwesomeComment.simplePaginate = simplePaginate
 
   /**
-   * Detect the resource is owned by a give user
+   * Detect the resource is owned by a given user
    * @param {number} userId
    * @return {Promise<boolean>}
    */
-  AwesomeComment.prototype.hasOwnedByGiveUser = async function (userId) {
+  AwesomeComment.prototype.hasOwnedByGivenUser = function (userId) {
     return userId && this.UserId === userId
+  }
+
+  /**
+   * Detect the resource is stared by a given user
+   * @param {number} userId
+   * @return {Promise<boolean>}
+   */
+  AwesomeComment.prototype.hasStarByGivenUser = async function (userId) {
+    return await this.hasStarUser(userId)
   }
 
   return AwesomeComment

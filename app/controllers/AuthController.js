@@ -23,11 +23,9 @@ const login = async(ctx, next) => {
     return ctx.body = {
       token: jsonWebToken.sign({
         exp: Math.floor(Date.now() / 1000) + (60 * 10),
-        user: {
-          name: user.name,
-          email: user.email,
-          id: user.id,
-        },
+        name: user.name,
+        email: user.email,
+        id: user.id,
       }, process.env.APP_KEY),
     }
   } else {
