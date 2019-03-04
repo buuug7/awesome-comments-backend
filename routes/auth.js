@@ -1,5 +1,7 @@
-const {login, test} = require('../app/controllers/AuthController')
+const { login, github, githubCallback } = require('../app/controllers/AuthController')
 
 module.exports = (router) => {
-  router.post('/public/login',login )
+  router.post('/public/login', login)
+  router.get('/public/login/github', github)
+  router.get('/public/login/github/callback', githubCallback)
 }

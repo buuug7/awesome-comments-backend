@@ -1,5 +1,6 @@
 const jsonWebToken = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const fetch = require('node-fetch')
 
 const { User } = require('../models/index')
 
@@ -36,4 +37,45 @@ const login = async(ctx, next) => {
   }
 }
 
-module.exports = { login }
+async function github (ctx, next) {
+  const clientId = 'e35c0fb524d888487038'
+  const clientSecret = 'b5d2df1a91c6cca5a0ad73ffb6d565ce6096f221'
+  const redirectUrl = 'http://localhost:3000/public/login/github/callback'
+  const url = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&scope=user`
+
+  await ctx.render('github', {
+    url: url
+  })
+}
+
+async function githubCallback (ctx, next) {
+
+  let query = ctx.request.query
+  let code = query.code
+
+  const clientId = 'e35c0fb524d888487038'
+  const clientSecret = 'b5d2df1a91c6cca5a0ad73ffb6d565ce6096f221'
+  const redirectUrl = 'http://localhost:3000/public/login/github/callback'
+
+  const url = 'https://github.com/login/oauth/access_token'
+
+
+  try {
+    let s = await fetch(url, {
+      method: 'POST',
+      body: {
+        client_id: clientId,
+        client_secret: clientSecret,
+        code: code,
+        redirect_uri: redirectUrl
+      },
+      mode:'no-cors'
+    })
+  }catch (e) {
+    console.log(e)
+  }
+
+  ctx.body = s
+}
+
+module.exports = { login, github, githubCallback }

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>login with github</title>
+
+   <a href="" id="github">github</a>
+</head>
+<body>
+
+   <script>
+     const clientId = 'e35c0fb524d888487038'
+     const clientSecret = 'b5d2df1a91c6cca5a0ad73ffb6d565ce6096f221'
+     const redirectUrl = 'http://localhost:3000/public/login/github/callback'
+     const url = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}`
+     document.querySelector('#github').setAttribute('href', url)
+   </script>
+
+</body>
+</html>
