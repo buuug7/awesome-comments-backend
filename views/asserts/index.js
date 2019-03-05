@@ -15,8 +15,6 @@ let a = `${url}?client_id=${clientId}&client_secret=${clientSecret}&code=${code}
 //   },
 // }).then(res => console.log(res))
 
-
-
 axios({
   method: 'post',
   url: proxy + a,

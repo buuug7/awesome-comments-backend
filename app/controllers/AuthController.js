@@ -61,7 +61,7 @@ async function github (ctx, next) {
  * Github callback, return JWT
  * @param ctx
  * @param next
- * @return {Promise<object>}
+ * @return {Promise<object >}
  */
 async function githubCallback (ctx, next) {
 
