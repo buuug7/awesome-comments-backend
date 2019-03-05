@@ -7,14 +7,14 @@ There has some problem when use knex migration with dotenv. the knex cli can not
 ## bookshelf CRUD
 
 ```javascript
-new Book({ title: ".." }).save();
+new Book({ title: '..' }).save();
 
 new Book({ id: 1 }).fetch();
 
 Book.where({ id: 1 }).fetch();
-Book.where("favorite_color", "red").fetch();
-Book.where("favorite_color", "<>", "red").fetch();
-Book.query(q => q.orderBy("updated_at"));
+Book.where('favorite_color', 'red').fetch();
+Book.where('favorite_color', '<>', 'red').fetch();
+Book.query(q => q.orderBy('updated_at'));
 ```
 
 ## create database

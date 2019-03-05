@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const AwesomeCommentUserStar = sequelize.define("AwesomeCommentUserStar", {
+  const AwesomeCommentUserStar = sequelize.define('AwesomeCommentUserStar', {
     AwesomeCommentId: {
       type: DataTypes.INTEGER,
       primaryKey: true

@@ -1,11 +1,11 @@
-const bcrypt = require("bcrypt");
-const fetch = require("node-fetch");
+const bcrypt = require('bcrypt');
+const fetch = require('node-fetch');
 
-const { signAuthToken, randomStr } = require("../util");
+const { signAuthToken, randomStr } = require('../util');
 
-const service = require("../../config/service");
+const service = require('../../config/service');
 
-const { User } = require("../models/index");
+const { User } = require('../models/index');
 
 /**
  * Auth the give user and return JWT
@@ -18,7 +18,7 @@ async function auth(ctx, next) {
 
   let user = await User.findOne({
     where: { email: requestData.email },
-    attributes: ["id", "name", "email", "password"]
+    attributes: ['id', 'name', 'email', 'password']
   });
 
   if (!user) {
@@ -37,7 +37,7 @@ async function auth(ctx, next) {
   } else {
     ctx.status = 401;
     ctx.body = {
-      message: "Authentication Error"
+      message: 'Authentication Error'
     };
   }
 }
@@ -50,13 +50,13 @@ async function auth(ctx, next) {
  */
 async function github(ctx, next) {
   const redirectToGithubIdentityUrl =
-    "https://github.com/login/oauth/authorize";
+    'https://github.com/login/oauth/authorize';
 
   const url = `${redirectToGithubIdentityUrl}?client_id=${
     service.github.client_id
   }&scope=${service.github.scope}`;
 
-  await ctx.render("github", {
+  await ctx.render('github', {
     url: url
   });
 }
@@ -71,12 +71,12 @@ async function githubCallback(ctx, next) {
   //
   // get github token
   //
-  const getAccessTokenUrl = "https://github.com/login/oauth/access_token";
+  const getAccessTokenUrl = 'https://github.com/login/oauth/access_token';
   const response = await fetch(getAccessTokenUrl, {
-    method: "post",
+    method: 'post',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({
       client_id: service.github.client_id,
@@ -86,7 +86,7 @@ async function githubCallback(ctx, next) {
   });
 
   let token = await response.json();
-  token = token["access_token"];
+  token = token['access_token'];
 
   //
   // request github user information through access_token

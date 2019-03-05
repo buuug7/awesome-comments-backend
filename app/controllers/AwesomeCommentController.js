@@ -1,5 +1,5 @@
-const dayjs = require("dayjs");
-const { AwesomeComment, User } = require("../models/index.js");
+const dayjs = require('dayjs');
+const { AwesomeComment, User } = require('../models/index.js');
 
 /**
  * Get a listing of the resource
@@ -113,7 +113,7 @@ async function star(ctx, next) {
     ctx.status = 403;
     return (ctx.body = {
       message:
-        "oops, there is something wrong while star, perhaps it was already stared"
+        'oops, there is something wrong while star, perhaps it was already stared'
     });
   }
 
@@ -139,7 +139,7 @@ async function unStar(ctx, next) {
     ctx.status = 403;
     ctx.body = {
       message:
-        "oops, there is something wrong while unstar, perhaps it was already unstared."
+        'oops, there is something wrong while unstar, perhaps it was already unstared.'
     };
   }
 

@@ -1,4 +1,4 @@
-const jsonWebToken = require("jsonwebtoken");
+const jsonWebToken = require('jsonwebtoken');
 
 /**
  * return JWT token

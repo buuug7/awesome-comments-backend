@@ -1,9 +1,9 @@
-const faker = require("faker");
+const faker = require('faker');
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert(
-      "AwesomeComments",
+      'AwesomeComments',
       [
         {
           userId: 1,
@@ -88,6 +88,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete("AwesomeComments", null, {});
+    return queryInterface.bulkDelete('AwesomeComments', null, {});
   }
 };

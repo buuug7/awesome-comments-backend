@@ -1,10 +1,10 @@
-const sequelize = require("../db");
+const sequelize = require('../db');
 
 const models = {
-  User: sequelize.import(__dirname + "/User"),
-  AwesomeComment: sequelize.import(__dirname + "/AwesomeComment"),
+  User: sequelize.import(__dirname + '/User'),
+  AwesomeComment: sequelize.import(__dirname + '/AwesomeComment'),
   AwesomeCommentUserStar: sequelize.import(
-    __dirname + "/AwesomeCommentUserStar"
+    __dirname + '/AwesomeCommentUserStar'
   )
 };
 
@@ -12,6 +12,6 @@ Object.keys(models).forEach(key => {
   models[key].associate(models);
 });
 
-models["sequelize"] = sequelize;
+models['sequelize'] = sequelize;
 
 module.exports = models;

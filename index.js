@@ -1,16 +1,16 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const Koa = require("koa");
+const Koa = require('koa');
 const app = new Koa();
-const session = require("koa-session");
-const koaBody = require("koa-body");
-const jwt = require("koa-jwt");
-const cors = require("@koa/cors");
-const logger = require("koa-logger");
-const views = require("koa-views");
-const serve = require("koa-static");
+const session = require('koa-session');
+const koaBody = require('koa-body');
+const jwt = require('koa-jwt');
+const cors = require('@koa/cors');
+const logger = require('koa-logger');
+const views = require('koa-views');
+const serve = require('koa-static');
 
-const Router = require("koa-router");
+const Router = require('koa-router');
 const router = new Router();
 
 app.keys = [process.env.APP_KEY];
@@ -30,14 +30,14 @@ app.use(async (ctx, next) => {
   }
 });
 
-app.use(serve(__dirname + "/views/asserts"));
+app.use(serve(__dirname + '/views/asserts'));
 
 app.use(
-  views(__dirname + "/views", {
+  views(__dirname + '/views', {
     map: {
-      html: "pug"
+      html: 'pug'
     },
-    extension: "pug"
+    extension: 'pug'
   })
 );
 
@@ -53,13 +53,13 @@ app.use(cors());
 app.use(jwt({ secret: process.env.APP_KEY }).unless({ path: [/^\/public/] }));
 
 // router
-require("./routes/router")(router);
+require('./routes/router')(router);
 app.use(router.routes());
 app.use(router.allowedMethods());
 
 // console.log(process.env.NODE_ENV)
 
-if (process.env.NODE_ENV !== "test") {
+if (process.env.NODE_ENV !== 'test') {
   app.listen(process.env.APP_PORT);
 }
 

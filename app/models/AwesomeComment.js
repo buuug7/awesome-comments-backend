@@ -1,9 +1,9 @@
-const simplePaginate = require("../pagination");
-const { AwesomeCommentUserStar } = require("./index");
+const simplePaginate = require('../pagination');
+const { AwesomeCommentUserStar } = require('./index');
 
 module.exports = (sequelize, DataTypes) => {
   const AwesomeComment = sequelize.define(
-    "AwesomeComment",
+    'AwesomeComment',
     {
       id: {
         allowNull: false,
@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       author: {
         type: DataTypes.VIRTUAL,
         get: function() {
-          return "buuug7";
+          return 'buuug7';
         }
       }
     },
@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
             // sync
             // attach `hasOwnedByRequestUser` to the result
             model.setDataValue(
-              "hasOwnedByRequestUser",
+              'hasOwnedByRequestUser',
               model.hasOwnedByGivenUser(userId)
             );
 
@@ -66,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
             // set hasStarByRequestUser
             let hasStarByRequestUserCallback = model
               .hasStarUser(userId)
-              .then(res => model.setDataValue("hasStarByRequestUser", res));
+              .then(res => model.setDataValue('hasStarByRequestUser', res));
             asyncOperations.push(hasStarByRequestUserCallback);
           });
 
@@ -78,7 +78,7 @@ module.exports = (sequelize, DataTypes) => {
   AwesomeComment.associate = function(models) {
     models.AwesomeComment.belongsTo(models.User);
     models.AwesomeComment.belongsToMany(models.User, {
-      as: { singular: "StarUser", plural: "StarUsers" },
+      as: { singular: 'StarUser', plural: 'StarUsers' },
       through: models.AwesomeCommentUserStar
     });
   };

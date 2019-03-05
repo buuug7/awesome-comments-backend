@@ -4,27 +4,27 @@
 
 ```javascript
 // first login
-fetch("http://localhost:3000/public/login", {
-  method: "POST",
+fetch('http://localhost:3000/public/login', {
+  method: 'POST',
   headers: {
-    "Content-type": "application/json"
+    'Content-type': 'application/json'
   },
   body: JSON.stringify({
-    username: "buuug7",
-    password: "password"
+    username: 'buuug7',
+    password: 'password'
   })
 })
   .then(res => res.json())
   .then(json => {
     document.body.textContent = json.token;
-    localStorage.setItem("token", json.token);
+    localStorage.setItem('token', json.token);
   });
 
 // and then with token consumer the reset of api
-fetch("http://localhost:3000/test", {
+fetch('http://localhost:3000/test', {
   headers: {
-    Accept: "application/json",
-    Authorization: `Bearer ${localStorage.getItem("token")}`
+    Accept: 'application/json',
+    Authorization: `Bearer ${localStorage.getItem('token')}`
   }
 })
   .then(res => res.json())
@@ -36,24 +36,24 @@ fetch("http://localhost:3000/test", {
 ```javascript
 // login
 const login = () => {
-  return fetch("http://localhost:3000/public/login", {
-    method: "POST",
+  return fetch('http://localhost:3000/public/login', {
+    method: 'POST',
     headers: {
-      "Content-type": "application/json",
-      Accept: "application/json"
+      'Content-type': 'application/json',
+      Accept: 'application/json'
     },
     body: JSON.stringify({
-      username: "buuug7",
-      password: "123456"
+      username: 'buuug7',
+      password: '123456'
     })
   });
 };
 
 // getData
 const getData = token => {
-  fetch("http://localhost:3000/test", {
+  fetch('http://localhost:3000/test', {
     headers: {
-      Accept: "application/json",
+      Accept: 'application/json',
       Authorization: `Bearer ${token}`
     }
   })

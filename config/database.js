@@ -1,4 +1,4 @@
-require("dotenv").config();
+require('dotenv').config();
 
 /**
  * database config
@@ -11,7 +11,7 @@ module.exports = {
     password: process.env.DB_PASSWORD,
     host: process.env.DB_HOST,
     dialect: process.env.DB_CONNECTION,
-    timezone: "+8:00",
+    timezone: '+8:00',
     pool: {
       max: 5,
       min: 0,

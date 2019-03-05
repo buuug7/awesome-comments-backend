@@ -8,7 +8,7 @@
 module.exports = async function simplePaginate(pagination, findOptions = {}) {
   let { baseUrl, perPage, currentPage } = Object.assign(
     {},
-    { baseUrl: "", perPage: 10, currentPage: 1 },
+    { baseUrl: '', perPage: 10, currentPage: 1 },
     pagination
   );
 
