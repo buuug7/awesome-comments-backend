@@ -119,7 +119,7 @@ async function githubCallback (ctx, next) {
 
   // return JWT token
   ctx.body = {
-    token: signAuthToken(user)
+                       token: signAuthToken(user)
   }
 }
 
