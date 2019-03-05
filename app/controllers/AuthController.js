@@ -1,11 +1,11 @@
-const bcrypt = require('bcrypt')
-const fetch = require('node-fetch')
+const bcrypt = require("bcrypt");
+const fetch = require("node-fetch");
 
-const { signAuthToken, randomStr } = require('../util')
+const { signAuthToken, randomStr } = require("../util");
 
-const service = require('../../config/service')
+const service = require("../../config/service");
 
-const { User } = require('../models/index')
+const { User } = require("../models/index");
 
 /**
  * Auth the give user and return JWT
@@ -13,30 +13,32 @@ const { User } = require('../models/index')
  * @param next
  * @return {Promise<object>}
  */
-async function auth (ctx, next) {
-  const requestData = ctx.request.body
+async function auth(ctx, next) {
+  const requestData = ctx.request.body;
 
   let user = await User.findOne({
     where: { email: requestData.email },
-    attributes: ['id', 'name', 'email', 'password'],
-  })
+    attributes: ["id", "name", "email", "password"]
+  });
 
   if (!user) {
-    ctx.status = 401
-    return ctx.body = {
-      message: `Not exists a email with ${requestData.email}, did you already registry it?`,
-    }
+    ctx.status = 401;
+    return (ctx.body = {
+      message: `Not exists a email with ${
+        requestData.email
+      }, did you already registry it?`
+    });
   }
 
   if (bcrypt.compareSync(requestData.password, user.password)) {
-    return ctx.body = {
-      token: signAuthToken(user),
-    }
+    return (ctx.body = {
+      token: signAuthToken(user)
+    });
   } else {
-    ctx.status = 401
+    ctx.status = 401;
     ctx.body = {
-      message: 'Authentication Error',
-    }
+      message: "Authentication Error"
+    };
   }
 }
 
@@ -46,15 +48,17 @@ async function auth (ctx, next) {
  * @param next
  * @return {Promise<void>}
  */
-async function github (ctx, next) {
+async function github(ctx, next) {
+  const redirectToGithubIdentityUrl =
+    "https://github.com/login/oauth/authorize";
 
-  const redirectToGithubIdentityUrl = 'https://github.com/login/oauth/authorize'
+  const url = `${redirectToGithubIdentityUrl}?client_id=${
+    service.github.client_id
+  }&scope=${service.github.scope}`;
 
-  const url = `${redirectToGithubIdentityUrl}?client_id=${service.github.client_id}&scope=${service.github.scope}`
-
-  await ctx.render('github', {
+  await ctx.render("github", {
     url: url
-  })
+  });
 }
 
 /**
@@ -63,40 +67,39 @@ async function github (ctx, next) {
  * @param next
  * @return {Promise<object >}
  */
-async function githubCallback (ctx, next) {
-
+async function githubCallback(ctx, next) {
   //
   // get github token
   //
-  const getAccessTokenUrl = 'https://github.com/login/oauth/access_token'
+  const getAccessTokenUrl = "https://github.com/login/oauth/access_token";
   const response = await fetch(getAccessTokenUrl, {
-    method: 'post',
+    method: "post",
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      Accept: "application/json",
+      "Content-Type": "application/json"
     },
     body: JSON.stringify({
       client_id: service.github.client_id,
       client_secret: service.github.client_secret,
       code: ctx.request.query.code
     })
-  })
+  });
 
-  let token = await response.json()
-  token = token['access_token']
+  let token = await response.json();
+  token = token["access_token"];
 
   //
   // request github user information through access_token
   //
-  let githubUser = await fetch(service.github.user_info_url + token)
-  githubUser = await githubUser.json()
+  let githubUser = await fetch(service.github.user_info_url + token);
+  githubUser = await githubUser.json();
 
   //
   // find if exists associate user
   //
   let user = await User.findOne({
     where: { email: githubUser.email, github: githubUser.id }
-  })
+  });
 
   //
   // create if not exists
@@ -108,19 +111,19 @@ async function githubCallback (ctx, next) {
       github: githubUser.id,
       password: bcrypt.hashSync(randomStr(), 3),
       rememberToken: token
-    })
+    });
   }
 
   //
   // update token
   //
-  user.rememberToken = token
-  await user.save()
+  user.rememberToken = token;
+  await user.save();
 
   // return JWT token
   ctx.body = {
-                       token: signAuthToken(user)
-  }
+    token: signAuthToken(user)
+  };
 }
 
-module.exports = { auth, github, githubCallback }
+module.exports = { auth, github, githubCallback };

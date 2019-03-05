@@ -1,5 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User',
+  const User = sequelize.define(
+    "User",
     {
       id: {
         allowNull: false,
@@ -16,11 +17,13 @@ module.exports = (sequelize, DataTypes) => {
       updatedAt: DataTypes.DATE
     },
     {}
-  )
-  User.associate = function (models) {
-    models.User.hasMany(models.AwesomeComment)
-    models.User.belongsToMany(models.AwesomeComment,
-      { as: 'StarAwesomeComment', through: models.AwesomeCommentUserStar })
-  }
-  return User
-}
+  );
+  User.associate = function(models) {
+    models.User.hasMany(models.AwesomeComment);
+    models.User.belongsToMany(models.AwesomeComment, {
+      as: "StarAwesomeComment",
+      through: models.AwesomeCommentUserStar
+    });
+  };
+  return User;
+};

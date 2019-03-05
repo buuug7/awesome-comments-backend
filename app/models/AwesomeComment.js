@@ -1,8 +1,9 @@
-const simplePaginate = require('../pagination')
-const { AwesomeCommentUserStar } = require('./index')
+const simplePaginate = require("../pagination");
+const { AwesomeCommentUserStar } = require("./index");
 
 module.exports = (sequelize, DataTypes) => {
-  const AwesomeComment = sequelize.define('AwesomeComment',
+  const AwesomeComment = sequelize.define(
+    "AwesomeComment",
     {
       id: {
         allowNull: false,
@@ -21,83 +22,86 @@ module.exports = (sequelize, DataTypes) => {
       // virtual fields
       author: {
         type: DataTypes.VIRTUAL,
-        get: function () {
-          return 'buuug7'
-        },
-      },
+        get: function() {
+          return "buuug7";
+        }
+      }
     },
     {
       paranoid: true,
       hooks: {
-
         /**
          * Add more columns to output at afterFind hooks
          * @param models
          * @param {{ctx:object,...}} options
          */
-        afterFind: async function (models, options) {
-          let userId = null
+        afterFind: async function(models, options) {
+          let userId = null;
 
           if (!options.ctx) {
-            return
+            return;
           }
 
           if (options.ctx.state.user) {
-            userId = options.ctx.state.user.id
+            userId = options.ctx.state.user.id;
           }
 
           if (!models.length) {
-            models = [models]
+            models = [models];
           }
 
-          let asyncOperations = []
+          let asyncOperations = [];
 
-          models.forEach(async function (model) {
+          models.forEach(async function(model) {
             // sync
             // attach `hasOwnedByRequestUser` to the result
-            model.setDataValue('hasOwnedByRequestUser', model.hasOwnedByGivenUser(userId))
+            model.setDataValue(
+              "hasOwnedByRequestUser",
+              model.hasOwnedByGivenUser(userId)
+            );
 
             // below is async operation
             // put async operation to asyncOperation array
 
             // set hasStarByRequestUser
-            let hasStarByRequestUserCallback = model.hasStarUser(userId).then(res => model.setDataValue('hasStarByRequestUser', res))
-            asyncOperations.push(hasStarByRequestUserCallback)
-          })
+            let hasStarByRequestUserCallback = model
+              .hasStarUser(userId)
+              .then(res => model.setDataValue("hasStarByRequestUser", res));
+            asyncOperations.push(hasStarByRequestUserCallback);
+          });
 
-          return Promise.all(asyncOperations)
-        },
-      },
-    },
-  )
-  AwesomeComment.associate = function (models) {
-    models.AwesomeComment.belongsTo(models.User)
-    models.AwesomeComment.belongsToMany(models.User,
-      {
-        as: { singular: 'StarUser', plural: 'StarUsers' },
-        through: models.AwesomeCommentUserStar,
-      })
-  }
+          return Promise.all(asyncOperations);
+        }
+      }
+    }
+  );
+  AwesomeComment.associate = function(models) {
+    models.AwesomeComment.belongsTo(models.User);
+    models.AwesomeComment.belongsToMany(models.User, {
+      as: { singular: "StarUser", plural: "StarUsers" },
+      through: models.AwesomeCommentUserStar
+    });
+  };
 
-  AwesomeComment.simplePaginate = simplePaginate
+  AwesomeComment.simplePaginate = simplePaginate;
 
   /**
    * Detect the resource is owned by a given user
    * @param {number} userId
    * @return {Promise<boolean>}
    */
-  AwesomeComment.prototype.hasOwnedByGivenUser = function (userId) {
-    return userId && this.UserId === userId
-  }
+  AwesomeComment.prototype.hasOwnedByGivenUser = function(userId) {
+    return userId && this.UserId === userId;
+  };
 
   /**
    * Detect the resource is stared by a given user
    * @param {number} userId
    * @return {Promise<boolean>}
    */
-  AwesomeComment.prototype.hasStarByGivenUser = async function (userId) {
-    return await this.hasStarUser(userId)
-  }
+  AwesomeComment.prototype.hasStarByGivenUser = async function(userId) {
+    return await this.hasStarUser(userId);
+  };
 
-  return AwesomeComment
-}
+  return AwesomeComment;
+};

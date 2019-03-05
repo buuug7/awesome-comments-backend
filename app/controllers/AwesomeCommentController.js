@@ -1,20 +1,22 @@
-const dayjs = require('dayjs')
-const { AwesomeComment, User } = require('../models/index.js')
+const dayjs = require("dayjs");
+const { AwesomeComment, User } = require("../models/index.js");
 
 /**
  * Get a listing of the resource
  * GET /awesome-comments
  * @return {array}
  */
-async function list (ctx, next) {
-
+async function list(ctx, next) {
   /** @type {{page:number}} */
-  const q = ctx.request.query
+  const q = ctx.request.query;
 
-  ctx.body = await AwesomeComment.simplePaginate({
-    baseUrl: ctx.request.path,
-    currentPage: q.page || 1,
-  }, { ctx: ctx })
+  ctx.body = await AwesomeComment.simplePaginate(
+    {
+      baseUrl: ctx.request.path,
+      currentPage: q.page || 1
+    },
+    { ctx: ctx }
+  );
 }
 
 /**
@@ -22,18 +24,17 @@ async function list (ctx, next) {
  * GET /awesome-comments/:id
  * @return {AwesomeComment}
  */
-async function show (ctx, next) {
-
-  const userId = ctx.state.user ? ctx.state.user.id : null
+async function show(ctx, next) {
+  const userId = ctx.state.user ? ctx.state.user.id : null;
 
   const instance = await AwesomeComment.findOne({
     where: { id: ctx.params.id },
     ctx: ctx
-  })
+  });
 
   ctx.body = {
-    data: instance,
-  }
+    data: instance
+  };
 }
 
 /**
@@ -41,21 +42,20 @@ async function show (ctx, next) {
  * POST /awesome-comments
  * @return {AwesomeComment}
  */
-async function create (ctx, next) {
-
-  const requestBody = ctx.request.body
+async function create(ctx, next) {
+  const requestBody = ctx.request.body;
 
   // TODO: validate
 
   const instance = await AwesomeComment.create({
     UserId: requestBody.UserId,
     content: requestBody.content,
-    reference: requestBody.reference,
-  })
+    reference: requestBody.reference
+  });
 
   ctx.body = {
-    data: instance,
-  }
+    data: instance
+  };
 }
 
 /**
@@ -63,17 +63,17 @@ async function create (ctx, next) {
  * PUT /awesome-comments/:id
  * @return {object}
  */
-async function update (ctx, next) {
-  const requestBody = ctx.request.body
-  const id = ctx.params.id
+async function update(ctx, next) {
+  const requestBody = ctx.request.body;
+  const id = ctx.params.id;
 
   const instance = await AwesomeComment.update(requestBody, {
-    where: { id: id },
-  })
+    where: { id: id }
+  });
 
   ctx.body = {
-    data: instance,
-  }
+    data: instance
+  };
 }
 
 /**
@@ -81,17 +81,17 @@ async function update (ctx, next) {
  * DELETE /awesome-comments/:id
  * @return {object}
  */
-async function destroy (ctx, next) {
-  const id = ctx.params.id
+async function destroy(ctx, next) {
+  const id = ctx.params.id;
   const rs = await AwesomeComment.destroy({
-    where: { id: id },
-  })
+    where: { id: id }
+  });
 
-  console.log(rs)
+  console.log(rs);
 
   ctx.body = {
-    data: rs,
-  }
+    data: rs
+  };
 }
 
 /**
@@ -100,27 +100,26 @@ async function destroy (ctx, next) {
  * POST /awesome-comments/:id/star
  * @return {object}
  */
-async function star (ctx, next) {
-
-  const userId = ctx.state.user.id
+async function star(ctx, next) {
+  const userId = ctx.state.user.id;
 
   const instance = await AwesomeComment.findOne({
-    where: { id: ctx.params.id },
-  })
+    where: { id: ctx.params.id }
+  });
 
-  const rs = await instance.addStarUser(userId)
+  const rs = await instance.addStarUser(userId);
 
   if (!rs) {
-    ctx.status = 403
-    return ctx.body = {
-      message: 'oops, there is something wrong while star, perhaps it was already stared',
-    }
+    ctx.status = 403;
+    return (ctx.body = {
+      message:
+        "oops, there is something wrong while star, perhaps it was already stared"
+    });
   }
 
   ctx.body = {
-    data: { count: await instance.countStarUsers() },
-  }
-
+    data: { count: await instance.countStarUsers() }
+  };
 }
 
 /**
@@ -128,41 +127,41 @@ async function star (ctx, next) {
  * return the star count number
  * @return {object}
  */
-async function unStar (ctx, next) {
-  const userId = ctx.state.user.id
+async function unStar(ctx, next) {
+  const userId = ctx.state.user.id;
   const instance = await AwesomeComment.findOne({
-    where: { id: ctx.params.id },
-  })
+    where: { id: ctx.params.id }
+  });
 
-  const rs = await instance.removeStarUser(userId)
+  const rs = await instance.removeStarUser(userId);
 
   if (!rs) {
-    ctx.status = 403
+    ctx.status = 403;
     ctx.body = {
-      message: 'oops, there is something wrong while unstar, perhaps it was already unstared.',
-    }
+      message:
+        "oops, there is something wrong while unstar, perhaps it was already unstared."
+    };
   }
 
   ctx.body = {
-    data: await instance.countStarUsers(),
-  }
+    data: await instance.countStarUsers()
+  };
 }
 
 /**
  * Get the star count of specified resource
  * @return {object}
  */
-async function starCount (ctx, next) {
-
+async function starCount(ctx, next) {
   const instance = await AwesomeComment.findOne({
-    where: { id: ctx.params.id },
-  })
+    where: { id: ctx.params.id }
+  });
 
   ctx.body = {
     data: {
-      count: await instance.countStarUsers(),
-    },
-  }
+      count: await instance.countStarUsers()
+    }
+  };
 }
 
 module.exports = {
@@ -173,5 +172,5 @@ module.exports = {
   destroy,
   star,
   unStar,
-  starCount,
-}
+  starCount
+};
