@@ -1,11 +1,19 @@
-const jsonWebToken = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const fetch = require('node-fetch')
 
+const { signAuthToken, randomStr } = require('../util')
+
+const service = require('../../config/service')
+
 const { User } = require('../models/index')
 
-// login
-const login = async(ctx, next) => {
+/**
+ * Auth the give user and return JWT
+ * @param ctx
+ * @param next
+ * @return {Promise<object>}
+ */
+async function auth (ctx, next) {
   const requestData = ctx.request.body
 
   let user = await User.findOne({
@@ -22,12 +30,7 @@ const login = async(ctx, next) => {
 
   if (bcrypt.compareSync(requestData.password, user.password)) {
     return ctx.body = {
-      token: jsonWebToken.sign({
-        exp: Math.floor(Date.now() / 1000) + (60 * 10),
-        name: user.name,
-        email: user.email,
-        id: user.id,
-      }, process.env.APP_KEY),
+      token: signAuthToken(user),
     }
   } else {
     ctx.status = 401
@@ -37,45 +40,87 @@ const login = async(ctx, next) => {
   }
 }
 
+/**
+ *
+ * @param ctx
+ * @param next
+ * @return {Promise<void>}
+ */
 async function github (ctx, next) {
-  const clientId = 'e35c0fb524d888487038'
-  const clientSecret = 'b5d2df1a91c6cca5a0ad73ffb6d565ce6096f221'
-  const redirectUrl = 'http://localhost:3000/public/login/github/callback'
-  const url = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUrl}&scope=user`
+
+  const redirectToGithubIdentityUrl = 'https://github.com/login/oauth/authorize'
+
+  const url = `${redirectToGithubIdentityUrl}?client_id=${service.github.client_id}&scope=${service.github.scope}`
 
   await ctx.render('github', {
     url: url
   })
 }
 
+/**
+ * Github callback, return JWT
+ * @param ctx
+ * @param next
+ * @return {Promise<object>}
+ */
 async function githubCallback (ctx, next) {
 
-  let query = ctx.request.query
-  let code = query.code
-
-  const clientId = 'e35c0fb524d888487038'
-  const clientSecret = 'b5d2df1a91c6cca5a0ad73ffb6d565ce6096f221'
-  const redirectUrl = 'http://localhost:3000/public/login/github/callback'
-
-  const url = 'https://github.com/login/oauth/access_token'
-
-
-  try {
-    let s = await fetch(url, {
-      method: 'POST',
-      body: {
-        client_id: clientId,
-        client_secret: clientSecret,
-        code: code,
-        redirect_uri: redirectUrl
-      },
-      mode:'no-cors'
+  //
+  // get github token
+  //
+  const getAccessTokenUrl = 'https://github.com/login/oauth/access_token'
+  const response = await fetch(getAccessTokenUrl, {
+    method: 'post',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      client_id: service.github.client_id,
+      client_secret: service.github.client_secret,
+      code: ctx.request.query.code
     })
-  }catch (e) {
-    console.log(e)
+  })
+
+  let token = await response.json()
+  token = token['access_token']
+
+  //
+  // request github user information through access_token
+  //
+  let githubUser = await fetch(service.github.user_info_url + token)
+  githubUser = await githubUser.json()
+
+  //
+  // find if exists associate user
+  //
+  let user = await User.findOne({
+    where: { email: githubUser.email, github: githubUser.id }
+  })
+
+  //
+  // create if not exists
+  //
+  if (!user) {
+    user = await User.create({
+      email: githubUser.email,
+      name: githubUser.name,
+      github: githubUser.id,
+      password: bcrypt.hashSync(randomStr(), 3),
+      rememberToken: token
+    })
   }
 
-  ctx.body = s
+  //
+  // update token
+  //
+  user.rememberToken = token
+  await user.save()
+
+  // return JWT token
+  ctx.body = {
+    token: signAuthToken(user)
+  }
 }
 
-module.exports = { login, github, githubCallback }
+module.exports = { auth, github, githubCallback }

@@ -8,7 +8,7 @@ describe('test AwesomeCommentController', () => {
 
   beforeAll(async() => {
     const response = await request(app.callback()).post('/public/login').send({
-      email: 'youpp@126.com',
+      email: 'master@dev.com',
       password: '111111',
     })
     token = response.body.token

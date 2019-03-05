@@ -1,9 +1,9 @@
 require('dotenv').config()
 
-/*
-* database config
-* */
-
+/**
+ * database config
+ *
+ */
 module.exports = {
   development: {
     database: process.env.DB_DATABASE,

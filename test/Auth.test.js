@@ -3,32 +3,32 @@ const app = require('../index')
 
 describe('test authentication', () => {
 
-  test('POST /public/login = with correct password', async() => {
+  test('POST /public/auth = with correct password', async() => {
     const response = await request(app.callback())
-      .post('/public/login')
+      .post('/public/auth')
       .send({
-        email: 'youpp@126.com',
-        password: '111111',
+        email: 'master@dev.com',
+        password: 'master',
       })
 
     expect(response.status).toBe(200)
     expect(response.body).toHaveProperty('token')
   })
 
-  test('POST /public/login = with wrong password', async() => {
+  test('POST /public/auth = with wrong password', async() => {
     const response = await request(app.callback())
-      .post('/public/login')
+      .post('/public/auth')
       .send({
-        email: 'youpp@126.com',
+        email: 'master@dev.com',
         password: 'wrongPassword',
       })
     expect(response.status).toBe(401)
     expect(response.body.message).toBe('Authentication Error')
   })
 
-  test('POST /public/login = with wrong email and password', async() => {
+  test('POST /public/auth = with wrong email and password', async() => {
     const response = await request(app.callback())
-      .post('/public/login')
+      .post('/public/auth')
       .send({
         email: 'notExistsEmail@google.com',
         password: 'anything'
