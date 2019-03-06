@@ -30,7 +30,7 @@ app.use(async (ctx, next) => {
   }
 });
 
-app.use(serve(__dirname + '/views/asserts'));
+app.use(serve(__dirname + '/public'));
 
 app.use(
   views(__dirname + '/views', {

@@ -22,7 +22,9 @@ An application where collect and share awesome comments, build on top of [koa](h
   - migrations
   - seeds
 - **docs** all of your applications documents
+- **public** public resources for consume by views
 - **routes** contains all of the route definitions for your application
 - **test** contains all your automated tests
+- **views** store the view files
 
 ## TODO
