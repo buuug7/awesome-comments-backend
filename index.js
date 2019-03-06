@@ -7,8 +7,6 @@ const koaBody = require('koa-body');
 const jwt = require('koa-jwt');
 const cors = require('@koa/cors');
 const logger = require('koa-logger');
-const views = require('koa-views');
-const serve = require('koa-static');
 
 const Router = require('koa-router');
 const router = new Router();
@@ -29,17 +27,6 @@ app.use(async (ctx, next) => {
     };
   }
 });
-
-app.use(serve(__dirname + '/public'));
-
-app.use(
-  views(__dirname + '/views', {
-    map: {
-      html: 'pug'
-    },
-    extension: 'pug'
-  })
-);
 
 // session middleware
 app.use(session(app));
