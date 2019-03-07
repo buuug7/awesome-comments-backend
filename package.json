@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon",
-    "test": "jest --forceExit",
+    "test": "jest",
     "debug": "DEBUG=koa* node --harmony index.js"
   },
   "jest": {

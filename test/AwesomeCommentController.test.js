@@ -8,13 +8,17 @@ describe('test AwesomeCommentController', () => {
 
   beforeAll(async () => {
     const response = await request(app.callback())
-      .post('/public/login')
+      .post('/public/auth')
       .send({
         email: 'master@dev.com',
-        password: '111111'
+        password: 'master'
       });
     token = response.body.token;
   });
+
+  afterAll(async () => {
+    await new Promise(resolve => setTimeout(() => resolve(), 500))
+  })
 
   test('GET /awesome-comments', async () => {
     const response = await request(app.callback())

@@ -2,6 +2,11 @@ const request = require('supertest');
 const app = require('../index');
 
 describe('test authentication', () => {
+
+  afterAll(async () => {
+    await new Promise(resolve => setTimeout(() => resolve(), 500))
+  })
+
   test('POST /public/auth = with correct password', async () => {
     const response = await request(app.callback())
       .post('/public/auth')
