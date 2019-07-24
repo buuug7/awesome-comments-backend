@@ -1,14 +1,11 @@
 import * as bcrypt from 'bcrypt';
-
 import fetch from 'node-fetch';
-
 import { signAuthToken, randomStr } from '../util';
-
 import config from '../config';
-
 import { User } from '../entity/User';
-import { getRepository } from 'typeorm';
+import { getRepository, Repository } from 'typeorm';
 import HttpStatus from 'http-status-codes';
+import Koa from 'koa';
 
 /**
  * Auth the give user and return JWT
@@ -16,7 +13,9 @@ import HttpStatus from 'http-status-codes';
  * @param next
  * @return {Promise<object>}
  */
-async function auth(ctx, next) {
+async function auth(ctx: Koa.Context, next: Function) {
+
+  // @ts-ignore
   const requestData = ctx.request.body;
   console.log(requestData);
 
@@ -59,18 +58,18 @@ async function auth(ctx, next) {
  * @param next
  * @return {Promise<void>}
  */
-// async function github(ctx, next) {
-//   const redirectToGithubIdentityUrl =
-//     'https://github.com/login/oauth/authorize';
-//
-//   const url = `${redirectToGithubIdentityUrl}?client_id=${
-//     config.github.client_id
-//   }&scope=${config.github.scope}`;
-//
-//   await ctx.render('github', {
-//     url: url
-//   });
-// }
+async function github(ctx: Koa.Context, next) {
+  const redirectToGithubIdentityUrl =
+    'https://github.com/login/oauth/authorize';
+
+  const url = `${redirectToGithubIdentityUrl}?client_id=${
+    config.github.client_id
+  }&scope=${config.github.scope}`;
+
+  console.log(url);
+
+  return ctx.redirect(url);
+}
 
 /**
  * Github callback, return JWT
@@ -78,63 +77,70 @@ async function auth(ctx, next) {
  * @param next
  * @return {Promise<object >}
  */
-// async function githubCallback(ctx, next) {
-//   //
-//   // get github token
-//   //
-//   const getAccessTokenUrl = 'https://github.com/login/oauth/access_token';
-//   const response = await fetch(getAccessTokenUrl, {
-//     method: 'post',
-//     headers: {
-//       Accept: 'application/json',
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify({
-//       client_id: config.github.client_id,
-//       client_secret: config.github.client_secret,
-//       code: ctx.request.query.code
-//     })
-//   });
-//
-//   let token = await response.json();
-//   token = token['access_token'];
-//
-//   //
-//   // request github user information through access_token
-//   //
-//   let githubUser = await fetch(config.github.user_info_url + token);
-//   githubUser = await githubUser.json();
-//
-//   //
-//   // find if exists associate user
-//   //
-//   let user = await User.findOne({
-//     where: { email: githubUser.email, github: githubUser.id }
-//   });
-//
-//   //
-//   // create if not exists
-//   //
-//   if (!user) {
-//     user = await User.create({
-//       email: githubUser.email,
-//       name: githubUser.name,
-//       github: githubUser.id,
-//       password: bcrypt.hashSync(randomStr(), 3),
-//       rememberToken: token
-//     });
-//   }
-//
-//   //
-//   // update token
-//   //
-//   user.rememberToken = token;
-//   await user.save();
-//
-//   // return JWT token
-//   ctx.body = {
-//     token: signAuthToken(user)
-//   };
-// }
+async function githubCallback(ctx:Koa.Context, next) {
+  //
+  // get github token
+  //
+  const getAccessTokenUrl = 'https://github.com/login/oauth/access_token';
+  const response = await fetch(getAccessTokenUrl, {
+    method: 'post',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      client_id: config.github.client_id,
+      client_secret: config.github.client_secret,
+      code: ctx.request.query.code
+    })
+  });
 
-export { auth /*github, githubCallback*/ };
+  let token = await response.json();
+  token = token['access_token'];
+
+  //
+  // request github user information through access_token
+  //
+  let githubUser: any = await fetch(config.github.user_info_url + token);
+  githubUser = await githubUser.json();
+
+  //
+  // find if exists associate user
+  //
+
+  const userRepository: Repository<User> = getRepository(User);
+
+  let user = await userRepository.findOne({
+    where: {
+      email: githubUser.email,
+      github: githubUser.id
+    }
+  });
+
+  //
+  // create if not exists
+  //
+  if (!user) {
+    const tUser = new User();
+    tUser.email = githubUser.email;
+    tUser.name = githubUser.name;
+    tUser.github = githubUser.id;
+    tUser.password = bcrypt.hashSync(randomStr(), 3);
+    tUser.rememberToken = token;
+
+    await userRepository.save(tUser);
+  }
+
+  //
+  // update token
+  //
+  user.rememberToken = token;
+  await userRepository.save(user);
+
+  // return JWT token
+  ctx.body = {
+    token: signAuthToken(user)
+  };
+}
+
+export { auth, github, githubCallback };

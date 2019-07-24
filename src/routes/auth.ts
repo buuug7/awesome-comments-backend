@@ -6,6 +6,6 @@ const {
 
 module.exports = router => {
   router.post('/public/auth', auth);
-  // router.get('/public/login/github', github);
-  // router.get('/public/login/github/callback', githubCallback);
+  router.get('/public/login/github', github);
+  router.get('/public/login/github/callback', githubCallback);
 };

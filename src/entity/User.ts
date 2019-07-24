@@ -33,6 +33,11 @@ export class User {
   @Column({
     nullable: true
   })
+  github: string;
+
+  @Column({
+    nullable: true
+  })
   createdAt: Date;
 
   @Column({
