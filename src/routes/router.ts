@@ -1,5 +1,7 @@
-// registry all you router here
-module.exports = router => {
-  require('./auth')(router);
-  // require('./awesome-comments')(router);
+import auth from './auth';
+import awesomeComments from './awesome-comments';
+
+export default router => {
+  auth(router);
+  awesomeComments(router);
 };

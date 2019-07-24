@@ -3,8 +3,8 @@
    "host": "localhost",
    "port": 3306,
    "username": "root",
-   "password": "123456789",
-   "database": "test",
+   "password": "root",
+   "database": "awesome_comments",
    "synchronize": true,
    "logging": false,
    "entities": [

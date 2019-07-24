@@ -7,3 +7,27 @@ Content-Type: application/json
 }
 
 ###
+
+GET http://localhost:3000/awesome-comments?page=1&search={content:'lorem ipsum'}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjM5ODM4MjYsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6NiwiaWF0IjoxNTYzOTgzMjI2fQ.RUCGQ2jCEuHqVJCkUviBvCIGvZc61YmheonJGdjjaDU
+
+###
+
+GET http://localhost:3000/awesome-comments/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjM5ODE4MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6NiwiaWF0IjoxNTYzOTgxMjA4fQ.vaWFxpAv1JrE2vWZoXkL2iWXj5_aoBcozVfb-PZgClM
+###
+
+### create awesome comments
+POST http://localhost:3000/awesome-comments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjM5ODMyMDAsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6NiwiaWF0IjoxNTYzOTgyNjAwfQ.Yg61MWjgHf0zmSBVKu2zElyaze_0Sw42RlD4ciGGoGg
+
+{
+  "content": "lorem ipsum dolor sit amet",
+  "more": {
+    "reference": "https://github.com/buuug7",
+    "npm": "https://npmjs.com/buuug7"
+  }
+}
+
+###

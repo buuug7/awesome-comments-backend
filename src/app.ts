@@ -1,16 +1,17 @@
 require('dotenv').config();
+
 import Koa from 'koa';
+import session from 'koa-session';
+import koaBody from 'koa-body';
+import jwt from 'koa-jwt';
+import cors from '@koa/cors';
+import logger from 'koa-logger';
+import Router from '@koa/router';
+import connection from './database';
+import routers from './routes/router'
+
 const app = new Koa();
-const session = require('koa-session');
-const koaBody = require('koa-body');
-const jwt = require('koa-jwt');
-const cors = require('@koa/cors');
-const logger = require('koa-logger');
-
-const Router = require('koa-router');
 const router = new Router();
-
-import connection from './connection';
 
 // @ts-ignore
 app.keys = [process.env.APP_KEY];
@@ -42,11 +43,11 @@ app.use(cors());
 app.use(jwt({ secret: process.env.APP_KEY }).unless({ path: [/^\/public/] }));
 
 // router
-require('./routes/router')(router);
+routers(router);
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-console.log(process.env.NODE_ENV)
+// console.log(process.env.NODE_ENV);
 
 if (process.env.NODE_ENV !== 'test') {
   connection
@@ -54,4 +55,4 @@ if (process.env.NODE_ENV !== 'test') {
     .catch(error => console.log(error));
 }
 
-module.exports = app;
+export default app;

@@ -53,7 +53,7 @@ async function auth(ctx: Koa.Context, next: Function) {
 }
 
 /**
- *
+ * Redirect to github
  * @param ctx
  * @param next
  * @return {Promise<void>}
@@ -121,21 +121,20 @@ async function githubCallback(ctx:Koa.Context, next) {
   // create if not exists
   //
   if (!user) {
-    const tUser = new User();
-    tUser.email = githubUser.email;
-    tUser.name = githubUser.name;
-    tUser.github = githubUser.id;
-    tUser.password = bcrypt.hashSync(randomStr(), 3);
-    tUser.rememberToken = token;
-
-    await userRepository.save(tUser);
+    user = new User();
+    user.email = githubUser.email;
+    user.name = githubUser.name;
+    user.github = githubUser.id;
+    user.password = bcrypt.hashSync(randomStr(), 3);
+    user.rememberToken = token;
+    await userRepository.save(user);
+  } else {
+    //
+    // update token
+    //
+    user.rememberToken = token;
+    await userRepository.save(user);
   }
-
-  //
-  // update token
-  //
-  user.rememberToken = token;
-  await userRepository.save(user);
 
   // return JWT token
   ctx.body = {
