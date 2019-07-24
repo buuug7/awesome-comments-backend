@@ -1,6 +1,6 @@
 # awesome comments backend
 
-An application where collect and share awesome comments, build on top of [koa](https://github.com/koajs/koa) and other awesome open source libraries, also the application has been inspired by great PHP framework [laravel](https://github.com/laravel/laravel).
+An application where collect and share awesome comments.
 
 ## usage
 

@@ -8,7 +8,7 @@ const {
   star,
   unStar,
   starCount
-} = require('../app/controllers/AwesomeCommentController');
+} = require('../controllers/AwesomeCommentController');
 
 module.exports = router => {
   // Get a listing of the resource

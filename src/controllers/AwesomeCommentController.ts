@@ -1,6 +1,6 @@
 // @ts-ignore
 const dayjs = require('dayjs');
-const { AwesomeComment, User } = require('../models');
+const { AwesomeComment, User } = require('../../app/models');
 
 /**
  * Get a listing of the resource

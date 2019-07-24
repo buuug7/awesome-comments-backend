@@ -1,4 +1,4 @@
-const jsonWebToken = require('jsonwebtoken');
+import jsonWebToken = require('jsonwebtoken');
 
 // @ts-ignore
 /**
@@ -28,4 +28,4 @@ function randomStr() {
     .substr(2);
 }
 
-module.exports = { signAuthToken, randomStr };
+export { signAuthToken, randomStr };

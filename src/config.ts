@@ -2,7 +2,7 @@
  *  Service
  *
  */
-module.exports = {
+export default {
   // login with github account
   github: {
     client_id: 'ee47ccff1c7db7bd97ac',
