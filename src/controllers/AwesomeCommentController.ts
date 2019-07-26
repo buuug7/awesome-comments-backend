@@ -2,6 +2,7 @@ import { getRepository, Repository, Like } from 'typeorm';
 import { AwesomeComment } from '../entity/AwesomeComment';
 import Koa from 'koa';
 import { User } from '../entity/User';
+import HttpStatus from 'http-status-codes';
 
 interface QueryParam {
   page?: number;
@@ -75,36 +76,45 @@ export async function create(ctx, next) {
  * PUT /awesome-comments/:id
  * @return {object}
  */
-// async function update(ctx, next) {
-//   const requestBody = ctx.request.body;
-//   const id = ctx.params.id;
-//
-//   const instance = await AwesomeComment.update(requestBody, {
-//     where: { id: id }
-//   });
-//
-//   ctx.body = {
-//     data: instance
-//   };
-// }
-//
-// /**
-//  * Remove the specified resource from storage
-//  * DELETE /awesome-comments/:id
-//  * @return {object}
-//  */
-// async function destroy(ctx, next) {
-//   const id = ctx.params.id;
-//   const rs = await AwesomeComment.destroy({
-//     where: { id: id }
-//   });
-//
-//   console.log(rs);
-//
-//   ctx.body = {
-//     data: rs
-//   };
-// }
+export async function update(ctx, next) {
+  const requestBody = ctx.request.body;
+  const id = ctx.params.id;
+
+  const awesomeCommentRepository = getRepository(AwesomeComment);
+  const awesomeComment = await awesomeCommentRepository.findOne(id);
+
+  if (!awesomeComment) {
+    ctx.throw(HttpStatus.NOT_FOUND);
+  }
+
+  const updatedAwesomeComment = await awesomeCommentRepository.merge(
+    awesomeComment,
+    requestBody
+  );
+
+  await awesomeCommentRepository.save(updatedAwesomeComment);
+
+  ctx.body = updatedAwesomeComment;
+}
+
+/**
+ * Remove the specified resource from storage
+ * DELETE /awesome-comments/:id
+ * @param ctx
+ * @param next
+ */
+export async function destroy(ctx, next) {
+  const id = ctx.params.id;
+  const repository = getRepository(AwesomeComment);
+  const awesomeComment = await repository.findOne(id);
+
+  if (!awesomeComment) {
+    ctx.throw(HttpStatus.NOT_FOUND);
+  }
+
+  await repository.delete(id);
+  ctx.status = HttpStatus.OK;
+}
 
 /**
  * Star the specified resource

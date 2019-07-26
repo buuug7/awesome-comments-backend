@@ -8,8 +8,6 @@ An application where collect and share awesome comments.
 - `cd awesome-comments`
 - `npm install`
 - edit `.env` file setting give you own configuration
-- `sequelize db:migrate` migrate your database tables
-- `sequelize db:seed:run` seed faker data into tables
 - `npm run start` start you work
 
 ## directory structure

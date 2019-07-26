@@ -20,5 +20,11 @@
       "entitiesDir": "src/entity",
       "migrationsDir": "src/migration",
       "subscribersDir": "src/subscriber"
-   }
+   },
+  "seeds": [
+    "src/seeds/**/*.seed.ts"
+  ],
+  "factories": [
+    "src/factories/**/*.factory.ts"
+  ]
 }

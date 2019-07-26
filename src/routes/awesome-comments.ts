@@ -2,8 +2,8 @@ import {
   list,
   show,
   create,
-  // update,
-  // destroy,
+  update,
+  destroy,
   // star,
   // unStar,
   // starCount
@@ -17,9 +17,9 @@ export default router => {
   // // Store a newly created resource in storage
   router.post('/awesome-comments', create);
   // // Update the specified resource in storage
-  // router.put('/awesome-comments/:id', update);
+  router.put('/awesome-comments/:id', update);
   // // Remove the specified resource from storage
-  // router.del('/awesome-comments/:id', destroy);
+  router.del('/awesome-comments/:id', destroy);
   // // Star the specified resource
   // router.post('/awesome-comments/:id/star', star);
   // // unStar the specified resource

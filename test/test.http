@@ -2,25 +2,25 @@ POST http://localhost:3000/public/auth
 Content-Type: application/json
 
 {
-  "email": "Alex@gmail.com",
-  "password": "123"
+  "email": "youpp@126.com",
+  "password": "111111"
 }
 
 ###
 
 GET http://localhost:3000/awesome-comments?page=1&search={content:'lorem ipsum'}
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjM5ODM4MjYsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6NiwiaWF0IjoxNTYzOTgzMjI2fQ.RUCGQ2jCEuHqVJCkUviBvCIGvZc61YmheonJGdjjaDU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQwMzU3NzYsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6NiwiaWF0IjoxNTY0MDMyMTc2fQ.qe9rrsjKJIdASvA9ZHGQy4MdCbGDzeX_-s76x5rP2cY
 
 ###
 
 GET http://localhost:3000/awesome-comments/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjM5ODE4MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6NiwiaWF0IjoxNTYzOTgxMjA4fQ.vaWFxpAv1JrE2vWZoXkL2iWXj5_aoBcozVfb-PZgClM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQwMzU3NzYsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6NiwiaWF0IjoxNTY0MDMyMTc2fQ.qe9rrsjKJIdASvA9ZHGQy4MdCbGDzeX_-s76x5rP2cY
 ###
 
 ### create awesome comments
 POST http://localhost:3000/awesome-comments
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjM5ODMyMDAsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6NiwiaWF0IjoxNTYzOTgyNjAwfQ.Yg61MWjgHf0zmSBVKu2zElyaze_0Sw42RlD4ciGGoGg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQwMzU3NzYsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6NiwiaWF0IjoxNTY0MDMyMTc2fQ.qe9rrsjKJIdASvA9ZHGQy4MdCbGDzeX_-s76x5rP2cY
 
 {
   "content": "lorem ipsum dolor sit amet",
@@ -29,5 +29,22 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjM5ODMyM
     "npm": "https://npmjs.com/buuug7"
   }
 }
+
+### update awesome comment
+
+PUT http://localhost:3000/awesome-comments/18
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQwMzU3NzYsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6NiwiaWF0IjoxNTY0MDMyMTc2fQ.qe9rrsjKJIdASvA9ZHGQy4MdCbGDzeX_-s76x5rP2cY
+
+{
+  "content": "such more useful clean my home"
+}
+
+###
+
+### Delete the awesome comment
+DELETE http://localhost:3000/awesome-comments/2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQwMzU3NzYsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6NiwiaWF0IjoxNTY0MDMyMTc2fQ.qe9rrsjKJIdASvA9ZHGQy4MdCbGDzeX_-s76x5rP2cY
 
 ###

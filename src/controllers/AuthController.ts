@@ -98,6 +98,7 @@ async function githubCallback(ctx:Koa.Context, next) {
   let token = await response.json();
   token = token['access_token'];
 
+
   //
   // request github user information through access_token
   //
