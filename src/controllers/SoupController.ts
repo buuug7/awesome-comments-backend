@@ -25,15 +25,15 @@ export async function list(ctx, next) {
   console.log(query.search.content);
   console.log(query);
 
-  const awesomeCommentsRepository: Repository<Soup> = getRepository(Soup);
-
-  const [data, total] = await awesomeCommentsRepository.findAndCount({
+  const [data, total] = await Soup.findAndCount({
     take: pageSize,
-    skip: (page - 1) * pageSize,
+    skip: (page -1) * pageSize,
     where: {
-      // content: Like(`%${where.content}%`)
+      // content: Like('%Ducimus%')
     }
   });
+
+
 
   ctx.body = {
     total,

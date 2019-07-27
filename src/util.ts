@@ -9,7 +9,7 @@ import jsonWebToken = require('jsonwebtoken');
 function signAuthToken(user) {
   return jsonWebToken.sign(
     {
-      exp: Math.floor(Date.now() / 1000) + 60 * 60,
+      exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
       name: user.name,
       email: user.email,
       id: user.id

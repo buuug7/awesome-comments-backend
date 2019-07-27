@@ -1,6 +1,7 @@
 import {
   BaseEntity,
   Column,
+  createQueryBuilder,
   Entity,
   getManager,
   JoinTable,
@@ -48,7 +49,9 @@ export class Soup extends BaseEntity {
   })
   deletedAt: Date;
 
-  @ManyToOne(type => User, user => user.soups)
+  @ManyToOne(type => User, user => user.soups, {
+    eager: true
+  })
   user: User;
 
   /**
@@ -56,7 +59,7 @@ export class Soup extends BaseEntity {
    * @param user
    */
   public star(user: User) {
-    return Soup.createQueryBuilder()
+    return createQueryBuilder()
       .insert()
       .into(UserSoupStar)
       .values([
@@ -111,4 +114,8 @@ export class Soup extends BaseEntity {
       })
       .getCount();
   }
+
+
+
 }
+

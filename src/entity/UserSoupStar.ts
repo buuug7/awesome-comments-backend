@@ -19,4 +19,6 @@ export class UserSoupStar  extends BaseEntity{
 
   @Column()
   createdAt!: Date;
+
+  soup: Soup
 }

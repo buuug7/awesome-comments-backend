@@ -3,14 +3,17 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToMany,
-  ManyToMany, BaseEntity
+  ManyToMany,
+  BaseEntity,
+  getManager,
+  createQueryBuilder
 } from 'typeorm';
 import { Soup } from './Soup';
 import { UserSoupStar } from './UserSoupStar';
 import { type } from 'os';
 
 @Entity()
-export class User extends BaseEntity{
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -20,16 +23,20 @@ export class User extends BaseEntity{
   @Column()
   email: string;
 
-  @Column()
+  @Column({
+    select: false
+  })
   password: string;
 
   @Column({
-    nullable: true
+    nullable: true,
+    select: false
   })
   rememberToken: string;
 
   @Column({
-    nullable: true
+    nullable: true,
+    select: false
   })
   github: string;
 
@@ -45,4 +52,16 @@ export class User extends BaseEntity{
 
   @OneToMany(type => Soup, soup => soup.user)
   soups: Soup[];
+
+  starSoups() {
+    return createQueryBuilder(Soup)
+      .leftJoinAndSelect('Soup.user', 'User')
+      .innerJoinAndSelect(
+        UserSoupStar,
+        'UserSoupStar',
+        'UserSoupStar.soupId = Soup.id'
+      )
+      .where('UserSoupStar.userId = :userId', { userId: this.id })
+      .getMany();
+  }
 }
