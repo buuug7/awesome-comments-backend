@@ -9,11 +9,11 @@ Content-Type: application/json
 }
 
 ### list soup
-GET http://localhost:3000/soups?page=1&search={content:'lorem ipsum'}
+GET http://localhost:3000/soups?currentPage=1&search_user=buuug7
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQzMTgzMDYsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDIzMTkwNn0.GHQWFaQ2gX_Ggb88DUj9BApNPJcGOiKqXUJpaiVER1U
 
 ### get one soup
-GET http://localhost:3000/soups/1
+GET http://localhost:3000/soups/1111
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQzMTgzMDYsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDIzMTkwNn0.GHQWFaQ2gX_Ggb88DUj9BApNPJcGOiKqXUJpaiVER1U
 
 ### create soup
@@ -22,7 +22,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQzMTgzMDYsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDIzMTkwNn0.GHQWFaQ2gX_Ggb88DUj9BApNPJcGOiKqXUJpaiVER1U
 
 {
-  "content": "lorem ipsum dolor sit amet",
+  "content": "然而，TypeScript会认为这段代码可能存在bug。 对象字面量会被特殊对待而且会经过额外属性检查，当将它们赋值给变量或作为参数传递的时候。 如果一个对象字面量存在任何“目标类型”不包含的属性时，你会得到一个错误。",
   "more": {
     "reference": "https://github.com/buuug7",
     "npm": "https://npmjs.com/buuug7"
@@ -31,7 +31,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQzMTgzM
 
 ### update soup
 
-PUT http://localhost:3000/soups/1
+PUT http://localhost:3000/soups/143434
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQzMTgzMDYsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDIzMTkwNn0.GHQWFaQ2gX_Ggb88DUj9BApNPJcGOiKqXUJpaiVER1U
 
@@ -61,6 +61,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQzMTgzM
 
 ### get user star soups
 GET http://localhost:3000/users/11/starSoups
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQzMTgzMDYsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDIzMTkwNn0.GHQWFaQ2gX_Ggb88DUj9BApNPJcGOiKqXUJpaiVER1U
+
+### test
+GET http://localhost:3000/test
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQzMTgzMDYsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDIzMTkwNn0.GHQWFaQ2gX_Ggb88DUj9BApNPJcGOiKqXUJpaiVER1U
 

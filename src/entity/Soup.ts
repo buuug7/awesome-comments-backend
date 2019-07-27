@@ -12,6 +12,7 @@ import {
 } from 'typeorm';
 import { User } from './User';
 import { UserSoupStar } from './UserSoupStar';
+import { PaginationParam, simplePagination } from '../pagination';
 
 @Entity()
 export class Soup extends BaseEntity {
@@ -50,9 +51,15 @@ export class Soup extends BaseEntity {
   deletedAt: Date;
 
   @ManyToOne(type => User, user => user.soups, {
-    eager: true
+    eager: false
   })
   user: User;
+
+
+  public paginate() {
+
+  }
+
 
   /**
    * star the soup with given user
@@ -114,8 +121,4 @@ export class Soup extends BaseEntity {
       })
       .getCount();
   }
-
-
-
 }
-

@@ -1,16 +1,17 @@
-import { getRepository, Repository, Like } from 'typeorm';
+import {
+  getRepository,
+  Repository,
+  Like,
+  Between,
+  LessThan,
+  MoreThan,
+  createQueryBuilder
+} from 'typeorm';
 import { Soup } from '../entity/Soup';
 import Koa from 'koa';
 import { User } from '../entity/User';
 import HttpStatus from 'http-status-codes';
-
-interface QueryParam {
-  page?: number;
-  pageSize?: number;
-  search?: {
-    content?: string;
-  };
-}
+import { PaginationParam, simplePagination } from '../pagination';
 
 /**
  *
@@ -18,27 +19,46 @@ interface QueryParam {
  * @param next
  */
 export async function list(ctx, next) {
-  const query: QueryParam = ctx.request.query;
-  const { page = 1, pageSize = 3 } = query;
+  let param: PaginationParam = ctx.request.query;
 
-  // @ts-ignore
-  console.log(query.search.content);
-  console.log(query);
+  console.log(param);
 
-  const [data, total] = await Soup.findAndCount({
-    take: pageSize,
-    skip: (page -1) * pageSize,
-    where: {
-      // content: Like('%Ducimus%')
-    }
-  });
+  const queryBuilder = createQueryBuilder(Soup).select();
 
+  if (param.search_content) {
+    queryBuilder.andWhere('content Like :content', {
+      content: `%${param.search_content}%`
+    });
+  }
 
+  if (param.search_createdAtFrom && !param.search_createdAtTo) {
+    queryBuilder.andWhere('createdAt >= :createdAt', {
+      createdAt: param.search_createdAtFrom
+    });
+  }
 
-  ctx.body = {
-    total,
-    data
-  };
+  if (param.search_createdAtTo && !param.search_createdAtFrom) {
+    queryBuilder.andWhere('createdAt <= :createdAt', {
+      createdAt: param.search_createdAtTo
+    });
+  }
+
+  if (param.search_createdAtFrom && param.search_createdAtTo) {
+    queryBuilder.andWhere('createdAt BETWEEN :createdAtFrom AND :createdAtTo', {
+      createdAtFrom: param.search_createdAtFrom,
+      createdAtTo: param.search_createdAtTo
+    });
+  }
+
+  if (param.search_user) {
+    const user = await User.findOne({ name: param.search_user });
+
+    queryBuilder.andWhere('userId = :userId', {
+      userId: user.id
+    });
+  }
+
+  ctx.body = await simplePagination(queryBuilder, param);
 }
 
 /**
@@ -47,7 +67,7 @@ export async function list(ctx, next) {
  * @return {Soup}
  */
 export async function show(ctx: Koa.Context, next) {
-  ctx.body = await Soup.findOne(ctx.params.id);
+  ctx.body = await Soup.findOneOrFail(ctx.params.id);
 }
 
 /**
@@ -69,12 +89,7 @@ export async function create(ctx, next) {
  * @return {object}
  */
 export async function update(ctx, next) {
-  const soup = await Soup.findOne(ctx.params.id);
-
-  if (!soup) {
-    ctx.throw(HttpStatus.NOT_FOUND);
-  }
-
+  const soup = await Soup.findOneOrFail(ctx.params.id);
   const updatedSoup = await Soup.merge(soup, ctx.request.body);
   await updatedSoup.save();
 
@@ -88,11 +103,7 @@ export async function update(ctx, next) {
  * @param next
  */
 export async function destroy(ctx, next) {
-  const soup = await Soup.findOne(ctx.params.id);
-
-  if (!soup) {
-    ctx.throw(HttpStatus.NOT_FOUND);
-  }
+  const soup = await Soup.findOneOrFail(ctx.params.id);
 
   await soup.remove();
   ctx.status = HttpStatus.OK;
@@ -105,12 +116,8 @@ export async function destroy(ctx, next) {
  * @return {object}
  */
 export async function star(ctx, next) {
-  const user: User = await User.findOne(ctx.state.user.id);
-  const soup: Soup = await Soup.findOne(ctx.params.id);
-
-  if (!soup) {
-    ctx.throw(HttpStatus.NOT_FOUND);
-  }
+  const user: User = await User.findOneOrFail(ctx.state.user.id);
+  const soup: Soup = await Soup.findOneOrFail(ctx.params.id);
 
   const isStar = await soup.isStarByGivenUser(user);
 
@@ -130,12 +137,8 @@ export async function star(ctx, next) {
  * return the star count number
  */
 export async function unStar(ctx, next) {
-  const user = await User.findOne(ctx.state.user.id);
-  const soup = await Soup.findOne(ctx.params.id);
-
-  if (!soup) {
-    ctx.throw(HttpStatus.NOT_FOUND);
-  }
+  const user = await User.findOneOrFail(ctx.state.user.id);
+  const soup = await Soup.findOneOrFail(ctx.params.id);
 
   await soup.unStar(user);
   ctx.body = {
@@ -148,11 +151,7 @@ export async function unStar(ctx, next) {
  * @return {object}
  */
 export async function starCount(ctx, next) {
-  const soup = await Soup.findOne(ctx.params.id);
-
-  if (!soup) {
-    ctx.throw(HttpStatus.NOT_FOUND);
-  }
+  const soup = await Soup.findOneOrFail(ctx.params.id);
 
   ctx.body = {
     count: await soup.starCount()

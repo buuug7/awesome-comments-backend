@@ -11,6 +11,7 @@ import {
 import { Soup } from './Soup';
 import { UserSoupStar } from './UserSoupStar';
 import { type } from 'os';
+import { simplePagination } from '../pagination';
 
 @Entity()
 export class User extends BaseEntity {
@@ -53,15 +54,19 @@ export class User extends BaseEntity {
   @OneToMany(type => Soup, soup => soup.user)
   soups: Soup[];
 
-  starSoups() {
-    return createQueryBuilder(Soup)
+  /**
+   * get the soups of user already star
+   */
+  public starSoups() {
+    const queryBuilder = createQueryBuilder(Soup)
       .leftJoinAndSelect('Soup.user', 'User')
       .innerJoinAndSelect(
         UserSoupStar,
         'UserSoupStar',
         'UserSoupStar.soupId = Soup.id'
       )
-      .where('UserSoupStar.userId = :userId', { userId: this.id })
-      .getMany();
+      .where('UserSoupStar.userId = :userId', { userId: this.id });
+
+    return simplePagination(queryBuilder, {});
   }
 }
