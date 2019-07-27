@@ -1,3 +1,5 @@
+
+### auth user
 POST http://localhost:3000/public/auth
 Content-Type: application/json
 
@@ -6,21 +8,18 @@ Content-Type: application/json
   "password": "111111"
 }
 
-###
+### list soup
+GET http://localhost:3000/soups?page=1&search={content:'lorem ipsum'}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQyMTYyNDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDIxMjY0OH0.7aQjbek_DdZXBOmYqj0QGRbOluYNp-1WCGYRLc7ApZ0
 
-GET http://localhost:3000/awesome-comments?page=1&search={content:'lorem ipsum'}
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQwMzU3NzYsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6NiwiaWF0IjoxNTY0MDMyMTc2fQ.qe9rrsjKJIdASvA9ZHGQy4MdCbGDzeX_-s76x5rP2cY
+### get one soup
+GET http://localhost:3000/soups/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQyMTYyNDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDIxMjY0OH0.7aQjbek_DdZXBOmYqj0QGRbOluYNp-1WCGYRLc7ApZ0
 
-###
-
-GET http://localhost:3000/awesome-comments/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQwMzU3NzYsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6NiwiaWF0IjoxNTY0MDMyMTc2fQ.qe9rrsjKJIdASvA9ZHGQy4MdCbGDzeX_-s76x5rP2cY
-###
-
-### create awesome comments
-POST http://localhost:3000/awesome-comments
+### create soup
+POST http://localhost:3000/soups
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQwMzU3NzYsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6NiwiaWF0IjoxNTY0MDMyMTc2fQ.qe9rrsjKJIdASvA9ZHGQy4MdCbGDzeX_-s76x5rP2cY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQyMTYyNDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDIxMjY0OH0.7aQjbek_DdZXBOmYqj0QGRbOluYNp-1WCGYRLc7ApZ0
 
 {
   "content": "lorem ipsum dolor sit amet",
@@ -30,21 +29,34 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQwMzU3N
   }
 }
 
-### update awesome comment
+### update soup
 
-PUT http://localhost:3000/awesome-comments/18
+PUT http://localhost:3000/soups/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQwMzU3NzYsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6NiwiaWF0IjoxNTY0MDMyMTc2fQ.qe9rrsjKJIdASvA9ZHGQy4MdCbGDzeX_-s76x5rP2cY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQyMTYyNDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDIxMjY0OH0.7aQjbek_DdZXBOmYqj0QGRbOluYNp-1WCGYRLc7ApZ0
 
 {
   "content": "such more useful clean my home"
 }
 
-###
-
-### Delete the awesome comment
-DELETE http://localhost:3000/awesome-comments/2
+### Delete the soup
+DELETE http://localhost:3000/soups/13
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQwMzU3NzYsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6NiwiaWF0IjoxNTY0MDMyMTc2fQ.qe9rrsjKJIdASvA9ZHGQy4MdCbGDzeX_-s76x5rP2cY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQyMTYyNDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDIxMjY0OH0.7aQjbek_DdZXBOmYqj0QGRbOluYNp-1WCGYRLc7ApZ0
+
+### star a soup
+POST http://localhost:3000/soups/3/star
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQyMTYyNDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDIxMjY0OH0.7aQjbek_DdZXBOmYqj0QGRbOluYNp-1WCGYRLc7ApZ0
+
+### unstar a soup
+POST http://localhost:3000/soups/3/unstar
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQyMTYyNDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDIxMjY0OH0.7aQjbek_DdZXBOmYqj0QGRbOluYNp-1WCGYRLc7ApZ0
+
+### get soup star count
+GET http://localhost:3000/soups/3/starcount
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQyMTYyNDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDIxMjY0OH0.7aQjbek_DdZXBOmYqj0QGRbOluYNp-1WCGYRLc7ApZ0
 
 ###

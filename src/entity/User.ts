@@ -3,16 +3,14 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToMany,
-  ManyToMany
+  ManyToMany, BaseEntity
 } from 'typeorm';
-import { AwesomeComment } from './AwesomeComment';
-import { UserAwesomeCommentStar } from './UserAwesomeCommentStar';
+import { Soup } from './Soup';
+import { UserSoupStar } from './UserSoupStar';
 import { type } from 'os';
 
-@Entity({
-  name: 'users'
-})
-export class User {
+@Entity()
+export class User extends BaseEntity{
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -45,12 +43,6 @@ export class User {
   })
   updatedAt: Date;
 
-  @OneToMany(type => AwesomeComment, awesomeComment => awesomeComment.user)
-  awesomeComments: AwesomeComment[];
-
-  @OneToMany(
-    type => UserAwesomeCommentStar,
-    userAwesomeCommentStar => userAwesomeCommentStar.user
-  )
-  userAwesomeCommentStars: UserAwesomeCommentStar[];
+  @OneToMany(type => Soup, soup => soup.user)
+  soups: Soup[];
 }

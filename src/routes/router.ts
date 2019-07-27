@@ -1,7 +1,7 @@
 import auth from './auth';
-import awesomeComments from './awesome-comments';
+import soups from './soups';
 
 export default router => {
   auth(router);
-  awesomeComments(router);
+  soups(router);
 };

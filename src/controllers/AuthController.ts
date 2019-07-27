@@ -27,9 +27,8 @@ async function auth(ctx: Koa.Context, next: Function) {
     return;
   }
 
-  const userRepository = getRepository(User);
-  const user = await userRepository.findOne({
-    where: { email: requestData.email }
+  const user = await User.findOne({
+    email: requestData.email
   });
 
   if (!user) {

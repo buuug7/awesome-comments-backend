@@ -1,21 +1,17 @@
 {
-  "name": "awesome-comments-backend",
+  "name": "awesome-soups",
   "version": "1.0.0",
-  "description": "awesome comments backend",
+  "description": "awesome soups",
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon --exec ts-node src/app.ts",
-    "build": "tsc && node src/app.js",
-    "test": "jest",
-    "debug": "DEBUG=koa* node --harmony src/index.js",
-    "seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed --config ormconfig.json"
+    "build": "tsc && node build/app.js",
+    "seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed --config ormconfig.json",
+    "test": "jest"
   },
   "jest": {
     "testEnvironment": "node"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "prettier": {
     "singleQuote": true
   },
@@ -52,5 +48,11 @@
     "typeorm-seeding": "^1.0.0-rc.3",
     "typescript": "3.5.3",
     "faker": "^4.1.0"
-  }
+  },
+  "keywords": [
+    "soups",
+    "awesome soups"
+  ],
+  "author": "",
+  "license": "ISC"
 }
