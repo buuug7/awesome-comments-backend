@@ -50,12 +50,12 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDMyMTMwOH0.OwnvUO-kAn0VMVvH0nyD4CSwFLw_TWGoxpg7__vyt9A
 
 ### unstar a soup
-POST http://localhost:3000/soups/3/unstar
+POST http://localhost:3000/soups/3/unStar
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDMyMTMwOH0.OwnvUO-kAn0VMVvH0nyD4CSwFLw_TWGoxpg7__vyt9A
 
 ### get soup star count
-GET http://localhost:3000/soups/3/starcount
+GET http://localhost:3000/soups/3/starCount
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDMyMTMwOH0.OwnvUO-kAn0VMVvH0nyD4CSwFLw_TWGoxpg7__vyt9A
 

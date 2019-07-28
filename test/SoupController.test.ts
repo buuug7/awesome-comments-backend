@@ -4,7 +4,7 @@ import * as faker from 'faker';
 import dayjs from 'dayjs';
 import connection from '../src/common/database';
 
-describe('test AwesomeCommentController', () => {
+describe('test SoupController', () => {
   let token;
 
   beforeAll(async () => {
@@ -68,7 +68,7 @@ describe('test AwesomeCommentController', () => {
 
   test('DELETE /soups/:id', async () => {
     const firstCreate = async () => {
-      await request(app.callback())
+      return  request(app.callback())
         .post('/soups')
         .set('Authorization', `Bearer ${token}`)
         .send({
@@ -78,7 +78,7 @@ describe('test AwesomeCommentController', () => {
 
     const res = await firstCreate();
 
-    // console.log(res.body);
+    console.log(res.body);
 
     const response = await request(app.callback())
       // @ts-ignore
@@ -90,31 +90,31 @@ describe('test AwesomeCommentController', () => {
     expect(response.status).toBe(200);
   });
 
-  test('POST /awesome-comments/:id/unstar', async () => {
+  test('POST /soups/:id/unStar', async () => {
     const response = await request(app.callback())
-      .post('/awesome-comments/1/unstar')
+      .post('/soups/1/unStar')
       .set('Authorization', `Bearer ${token}`);
     console.log(JSON.stringify(response.body));
     expect(response.status).toBe(200);
     // expect(response.body.data).toHaveProperty('count')
   });
 
-  test('POST /awesome-comments/:id/star', async () => {
+  test('POST /soups/:id/star', async () => {
     const response = await request(app.callback())
-      .post('/awesome-comments/1/star')
+      .post('/soups/1/star')
       .set('Authorization', `Bearer ${token}`);
 
     console.log(JSON.stringify(response.body));
     expect(response.status).toBe(200);
-    expect(response.body.data).toHaveProperty('count');
+    expect(response.body).toHaveProperty('count');
   });
 
-  test('GET /awesome-comments/:id/starcount', async () => {
+  test('GET /soups/:id/starCount', async () => {
     const response = await request(app.callback())
-      .get('/awesome-comments/1/starcount')
+      .get('/soups/1/starCount')
       .set('Authorization', `Bearer ${token}`);
     console.log(JSON.stringify(response.body));
     expect(response.status).toBe(200);
-    expect(response.body.data).toHaveProperty('count');
+    expect(response.body).toHaveProperty('count');
   });
 });

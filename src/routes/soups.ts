@@ -23,7 +23,7 @@ export default router => {
   // // Star the specified resource
   router.post('/soups/:id/star', star);
   // // unStar the specified resource
-  router.post('/soups/:id/unstar', unStar);
+  router.post('/soups/:id/unStar', unStar);
   // // Get the star count of specified resource
-  router.get('/soups/:id/starcount', starCount);
+  router.get('/soups/:id/starCount', starCount);
 };
