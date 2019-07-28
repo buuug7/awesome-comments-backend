@@ -7,7 +7,7 @@ import jwt from 'koa-jwt';
 import cors from '@koa/cors';
 import logger from 'koa-logger';
 import Router from '@koa/router';
-import connection from './database';
+import connection from './common/database';
 import routers from './routes/router'
 
 const app = new Koa();

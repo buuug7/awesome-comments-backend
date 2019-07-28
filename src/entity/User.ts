@@ -11,7 +11,7 @@ import {
 import { Soup } from './Soup';
 import { UserSoupStar } from './UserSoupStar';
 import { type } from 'os';
-import { simplePagination } from '../pagination';
+import { simplePagination } from '../common/pagination';
 
 @Entity()
 export class User extends BaseEntity {

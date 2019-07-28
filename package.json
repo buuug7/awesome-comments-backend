@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon --exec ts-node src/app.ts",
-    "build": "tsc && node build/app.js",
+    "build": "tsc",
+    "prod": "node ./build/app.js",
     "seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed --config ormconfig.js",
     "test": "jest"
   },
@@ -27,7 +28,6 @@
     "koa-body": "^4.1.0",
     "koa-jwt": "^3.6.0",
     "koa-logger": "^3.2.1",
-    "koa-router": "^7.4.0",
     "koa-session": "^5.12.2",
     "mysql2": "^1.6.5",
     "node-fetch": "^2.3.0",

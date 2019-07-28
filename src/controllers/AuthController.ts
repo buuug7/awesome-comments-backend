@@ -1,9 +1,9 @@
 import * as bcrypt from 'bcrypt';
 import fetch from 'node-fetch';
-import { signAuthToken, randomStr } from '../util';
-import config from '../config';
+import { signAuthToken, randomStr } from '../common/util';
+import config from '../common/settings';
 import { User } from '../entity/User';
-import { getRepository, Repository } from 'typeorm';
+import { createQueryBuilder, getRepository, Repository } from 'typeorm';
 import HttpStatus from 'http-status-codes';
 import Koa from 'koa';
 
@@ -14,7 +14,6 @@ import Koa from 'koa';
  * @return {Promise<object>}
  */
 async function auth(ctx: Koa.Context, next: Function) {
-
   // @ts-ignore
   const requestData = ctx.request.body;
   console.log(requestData);
@@ -27,9 +26,13 @@ async function auth(ctx: Koa.Context, next: Function) {
     return;
   }
 
-  const user = await User.findOne({
-    email: requestData.email
-  });
+  const user = await User.createQueryBuilder('User')
+    .select()
+    .addSelect('User.password')
+    .where('User.email = :email', {
+      email: requestData.email
+    })
+    .getOne();
 
   if (!user) {
     ctx.status = HttpStatus.UNAUTHORIZED;
@@ -76,7 +79,7 @@ async function github(ctx: Koa.Context, next) {
  * @param next
  * @return {Promise<object >}
  */
-async function githubCallback(ctx:Koa.Context, next) {
+async function githubCallback(ctx: Koa.Context, next) {
   //
   // get github token
   //
@@ -96,7 +99,6 @@ async function githubCallback(ctx:Koa.Context, next) {
 
   let token = await response.json();
   token = token['access_token'];
-
 
   //
   // request github user information through access_token

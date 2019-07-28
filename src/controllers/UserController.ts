@@ -1,7 +1,7 @@
 import Koa from 'koa';
 import { User } from '../entity/User';
 import { createQueryBuilder } from 'typeorm';
-import { simplePagination } from '../pagination';
+import { simplePagination } from '../common/pagination';
 import { Soup } from '../entity/Soup';
 
 export async function starSoups(ctx: Koa.Context, next) {
@@ -15,7 +15,5 @@ export async function starSoups(ctx: Koa.Context, next) {
 
 export async function test(ctx: Koa.Context, next) {
 
-
- ctx.body = await simplePagination({},createQueryBuilder(Soup));
 
 }

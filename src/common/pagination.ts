@@ -1,5 +1,5 @@
 import { BaseEntity, Like, QueryBuilder, SelectQueryBuilder } from 'typeorm';
-import { Soup } from './entity/Soup';
+import { Soup } from '../entity/Soup';
 
 export interface PaginationParam {
   baseUrl?: string;

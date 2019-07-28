@@ -12,7 +12,7 @@ import {
 } from 'typeorm';
 import { User } from './User';
 import { UserSoupStar } from './UserSoupStar';
-import { PaginationParam, simplePagination } from '../pagination';
+import { PaginationParam, simplePagination } from '../common/pagination';
 
 @Entity()
 export class Soup extends BaseEntity {

@@ -11,7 +11,7 @@ import { Soup } from '../entity/Soup';
 import Koa from 'koa';
 import { User } from '../entity/User';
 import HttpStatus from 'http-status-codes';
-import { PaginationParam, simplePagination } from '../pagination';
+import { PaginationParam, simplePagination } from '../common/pagination';
 
 /**
  *
