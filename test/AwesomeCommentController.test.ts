@@ -1,28 +1,26 @@
-const request = require('supertest');
-const app = require('../src/index');
-const faker = require('faker');
-const dayjs = require('dayjs');
+import request from 'supertest';
+import app from '../src/app';
+import * as faker from 'faker';
+import dayjs from 'dayjs';
+import connection from '../src/common/database';
 
 describe('test AwesomeCommentController', () => {
   let token;
 
   beforeAll(async () => {
+    await connection;
     const response = await request(app.callback())
       .post('/public/auth')
       .send({
-        email: 'master@dev.com',
-        password: 'master'
+        email: 'youpp@126.com',
+        password: '111111'
       });
     token = response.body.token;
   });
 
-  afterAll(async () => {
-    await new Promise(resolve => setTimeout(() => resolve(), 500))
-  })
-
-  test('GET /awesome-comments', async () => {
+  test('GET /soups', async () => {
     const response = await request(app.callback())
-      .get('/awesome-comments')
+      .get('/soups')
       .set('Authorization', `Bearer ${token}`);
 
     console.log(response.body);
@@ -32,35 +30,32 @@ describe('test AwesomeCommentController', () => {
     expect(response.body).toHaveProperty('nextPageUrl');
   });
 
-  test('GET /awesome-comments/:id', async () => {
+  test('GET /soups/:id', async () => {
     const response = await request(app.callback())
-      .get('/awesome-comments/1')
+      .get('/soups/1')
       .set('Authorization', `Bearer ${token}`);
 
     console.log(JSON.stringify(response.body));
 
     expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty('data');
-    expect(response.body.data).toHaveProperty('UserId');
+    expect(response.body).toHaveProperty('content');
   });
 
-  test('POST /awesome-comments', async () => {
+  test('POST /soups', async () => {
     const response = await request(app.callback())
-      .post('/awesome-comments')
+      .post('/soups')
       .set('Authorization', `Bearer ${token}`)
       .send({
-        UserId: 1,
-        content: faker.lorem.paragraph(),
-        reference: faker.internet.url()
+        content: faker.lorem.paragraph()
       });
     expect(response.status).toBe(200);
     expect(response.type).toEqual('application/json');
-    expect(response.body.data).toHaveProperty('content');
+    expect(response.body).toHaveProperty('content');
   });
 
-  test('PUT /awesome-comments/:id', async () => {
+  test('PUT /soups/:id', async () => {
     const response = await request(app.callback())
-      .put('/awesome-comments/1')
+      .put('/soups/1')
       .set('Authorization', `Bearer ${token}`)
       .send({
         content: 'from test2'
@@ -69,33 +64,30 @@ describe('test AwesomeCommentController', () => {
     console.log(JSON.stringify(response.body));
 
     expect(response.status).toBe(200);
-    expect(response.body.data[0]).toBeGreaterThan(0);
   });
 
-  test('DELETE /awesome-comments/:id', async () => {
+  test('DELETE /soups/:id', async () => {
     const firstCreate = async () => {
-      return await request(app.callback())
-        .post('/awesome-comments')
+      await request(app.callback())
+        .post('/soups')
         .set('Authorization', `Bearer ${token}`)
         .send({
-          UserId: 1,
-          content: 'created from test delete test',
-          reference: faker.internet.url()
+          content: 'created from test delete test'
         });
     };
 
     const res = await firstCreate();
 
-    console.log(res.body);
+    // console.log(res.body);
 
     const response = await request(app.callback())
-      .delete('/awesome-comments/' + res.body.data.id)
+      // @ts-ignore
+      .delete('/soups/' + res.body.id)
       .set('Authorization', `Bearer ${token}`);
 
     console.log(JSON.stringify(response.body));
 
     expect(response.status).toBe(200);
-    expect(response.body.data).toBe(1);
   });
 
   test('POST /awesome-comments/:id/unstar', async () => {

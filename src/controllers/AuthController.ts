@@ -34,6 +34,8 @@ async function auth(ctx: Koa.Context, next: Function) {
     })
     .getOne();
 
+  console.log(user)
+
   if (!user) {
     ctx.status = HttpStatus.UNAUTHORIZED;
     ctx.body = {

@@ -1,18 +1,18 @@
-const request = require('supertest');
-const app = require('../src/app.js');
+import request from 'supertest';
+import app from '../src/app';
+import connection from '../src/common/database';
 
 describe('test authentication', () => {
-
-  afterAll(async () => {
-    await new Promise(resolve => setTimeout(() => resolve(), 500))
-  })
+  beforeAll(async () => {
+    await connection;
+  });
 
   test('POST /public/auth = with correct password', async () => {
     const response = await request(app.callback())
       .post('/public/auth')
       .send({
-        email: 'master@dev.com',
-        password: 'master'
+        email: 'youpp@126.com',
+        password: '111111'
       });
 
     expect(response.status).toBe(200);
@@ -23,11 +23,11 @@ describe('test authentication', () => {
     const response = await request(app.callback())
       .post('/public/auth')
       .send({
-        email: 'master@dev.com',
-        password: 'wrongPassword'
+        email: 'youpp@126.com',
+        password: '2222'
       });
     expect(response.status).toBe(401);
-    expect(response.body.message).toBe('Authentication Error');
+    expect(response.body.message).toBe('Unauthorized');
   });
 
   test('POST /public/auth = with wrong email and password', async () => {
