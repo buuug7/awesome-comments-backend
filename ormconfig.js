@@ -4,7 +4,7 @@ module.exports = {
   port: 3306,
   username: 'root',
   password: 'root',
-  database: 'soups',
+  database: 'soup_hub',
   synchronize: true,
   logging: true,
   entities: ['src/entity/**/*.ts'],

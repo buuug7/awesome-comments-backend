@@ -63,7 +63,6 @@ export async function list(ctx, next) {
 
 /**
  * Get the specified resource
- * GET /awesome-comments/:id
  * @return {Soup}
  */
 export async function show(ctx: Koa.Context, next) {
@@ -72,7 +71,6 @@ export async function show(ctx: Koa.Context, next) {
 
 /**
  * Store a newly created resource in storage
- * POST /awesome-comments
  * @return {Soup}
  */
 export async function create(ctx, next) {
@@ -85,7 +83,6 @@ export async function create(ctx, next) {
 
 /**
  * Update the specified resource in storage
- * PUT /awesome-comments/:id
  * @return {object}
  */
 export async function update(ctx, next) {
@@ -98,7 +95,6 @@ export async function update(ctx, next) {
 
 /**
  * Remove the specified resource from storage
- * DELETE /awesome-comments/:id
  * @param ctx
  * @param next
  */
@@ -112,7 +108,6 @@ export async function destroy(ctx, next) {
 /**
  * Star the specified resource
  * return the start count number
- * POST /awesome-comments/:id/star
  * @return {object}
  */
 export async function star(ctx, next) {

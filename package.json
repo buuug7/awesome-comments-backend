@@ -1,13 +1,14 @@
 {
-  "name": "awesome-soups",
+  "name": "soup-hub",
   "version": "1.0.0",
-  "description": "awesome soups",
+  "description": "soup hub",
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon --exec ts-node src/app.ts",
     "build": "tsc",
     "prod": "node ./build/app.js",
-    "seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed --config ormconfig.js",
+    "db-sync": "ts-node ./node_modules/typeorm/cli.js schema:sync",
+    "db-seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed --config ormconfig.js",
     "test": "jest"
   },
   "jest": {
@@ -53,8 +54,9 @@
     "typescript": "3.5.3"
   },
   "keywords": [
-    "soups",
-    "awesome soups"
+    "soup hub",
+    "soup",
+    "awesome soup"
   ],
   "author": "",
   "license": "ISC"
