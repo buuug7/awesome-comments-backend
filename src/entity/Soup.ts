@@ -4,18 +4,18 @@ import {
   createQueryBuilder,
   Entity,
   getManager,
-  JoinTable,
-  ManyToMany,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn
 } from 'typeorm';
 import { User } from './User';
 import { UserSoupStar } from './UserSoupStar';
+import { Comment } from './Comment';
 import { PaginationParam, simplePagination } from '../common/pagination';
 
 @Entity()
 export class Soup extends BaseEntity {
+  static readonly commentableType = 'SOUP';
+
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -55,12 +55,6 @@ export class Soup extends BaseEntity {
   })
   user: User;
 
-
-  public paginate() {
-
-  }
-
-
   /**
    * star the soup with given user
    * @param user
@@ -99,8 +93,7 @@ export class Soup extends BaseEntity {
    * @param user
    */
   async isStarByGivenUser(user: User): Promise<boolean> {
-    const count = await getManager()
-      .createQueryBuilder(UserSoupStar, 'userSoupStar')
+    const count = await createQueryBuilder(UserSoupStar, 'userSoupStar')
       .where('userId = :userId AND soupId = :soupId', {
         userId: user.id,
         soupId: this.id
@@ -114,11 +107,46 @@ export class Soup extends BaseEntity {
    * return the star count number of the soup
    */
   async starCount(): Promise<number> {
-    return await getManager()
-      .createQueryBuilder(UserSoupStar, 'userSoupStar')
-      .where('soupId = :soupId', {
+    return await createQueryBuilder(UserSoupStar, 'UserSoupStar')
+      .where('UserSoupStar.soupId = :soupId', {
         soupId: this.id
       })
       .getCount();
+  }
+
+  /**
+   * create comment on the soup
+   * @param content
+   * @param user
+   * @param targetComment
+   */
+  async createComment({ content, user, targetComment }) {
+    const comment = Comment.create({
+      content: content,
+      commentableType: Soup.commentableType,
+      commentableId: this.id,
+      user: user,
+      targetComment: targetComment,
+      createdAt: new Date()
+    });
+
+    return comment.save();
+  }
+
+  /**
+   * get the soup comments
+   * @param paginationParam
+   */
+  async comments(paginationParam: PaginationParam) {
+    const query = createQueryBuilder(Comment, 'Comment')
+      .leftJoinAndSelect('Comment.user', 'user')
+      .where('Comment.commentableType = :commentableType', {
+        commentableType: Soup.commentableType
+      })
+      .andWhere('Comment.commentableId = :commentableId', {
+        commentableId: this.id
+      });
+
+    return simplePagination(query, paginationParam);
   }
 }

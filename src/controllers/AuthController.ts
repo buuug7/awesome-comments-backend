@@ -1,9 +1,9 @@
 import * as bcrypt from 'bcrypt';
 import fetch from 'node-fetch';
 import { signAuthToken, randomStr } from '../common/util';
-import config from '../common/settings';
+import { githubConfig } from '../common/settings';
 import { User } from '../entity/User';
-import { createQueryBuilder, getRepository, Repository } from 'typeorm';
+import { getRepository, Repository } from 'typeorm';
 import HttpStatus from 'http-status-codes';
 import Koa from 'koa';
 
@@ -13,7 +13,7 @@ import Koa from 'koa';
  * @param next
  * @return {Promise<object>}
  */
-async function auth(ctx: Koa.Context, next: Function) {
+export async function auth(ctx: Koa.Context, next: Function) {
   // @ts-ignore
   const requestData = ctx.request.body;
   console.log(requestData);
@@ -34,7 +34,7 @@ async function auth(ctx: Koa.Context, next: Function) {
     })
     .getOne();
 
-  console.log(user)
+  console.log(user);
 
   if (!user) {
     ctx.status = HttpStatus.UNAUTHORIZED;
@@ -62,13 +62,13 @@ async function auth(ctx: Koa.Context, next: Function) {
  * @param next
  * @return {Promise<void>}
  */
-async function github(ctx: Koa.Context, next) {
+export async function github(ctx: Koa.Context, next) {
   const redirectToGithubIdentityUrl =
     'https://github.com/login/oauth/authorize';
 
   const url = `${redirectToGithubIdentityUrl}?client_id=${
-    config.github.client_id
-  }&scope=${config.github.scope}`;
+    githubConfig.client_id
+  }&scope=${githubConfig.scope}`;
 
   console.log(url);
 
@@ -81,7 +81,7 @@ async function github(ctx: Koa.Context, next) {
  * @param next
  * @return {Promise<object >}
  */
-async function githubCallback(ctx: Koa.Context, next) {
+export async function githubCallback(ctx: Koa.Context, next) {
   //
   // get github token
   //
@@ -93,8 +93,8 @@ async function githubCallback(ctx: Koa.Context, next) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      client_id: config.github.client_id,
-      client_secret: config.github.client_secret,
+      client_id: githubConfig.client_id,
+      client_secret: githubConfig.client_secret,
       code: ctx.request.query.code
     })
   });
@@ -105,7 +105,7 @@ async function githubCallback(ctx: Koa.Context, next) {
   //
   // request github user information through access_token
   //
-  let githubUser: any = await fetch(config.github.user_info_url + token);
+  let githubUser: any = await fetch(githubConfig.user_info_url + token);
   githubUser = await githubUser.json();
 
   //
@@ -145,5 +145,3 @@ async function githubCallback(ctx: Koa.Context, next) {
     token: signAuthToken(user)
   };
 }
-
-export { auth, github, githubCallback };
