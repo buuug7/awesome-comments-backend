@@ -9,6 +9,11 @@ import {
 import { User } from './User';
 import { Soup } from './Soup';
 
+
+/**
+ * pivot table used for store user star soup
+ */
+
 @Entity()
 export class UserSoupStar  extends BaseEntity{
   @PrimaryColumn()

@@ -6,7 +6,9 @@ import {
   destroy,
   star,
   unStar,
-  starCount
+  starCount,
+  createComment,
+  getComments,
 } from '../controllers/SoupController';
 
 export default router => {
@@ -14,16 +16,21 @@ export default router => {
   router.get('/soups', list);
   // Get the specified resource
   router.get('/soups/:id', show);
-  // // Store a newly created resource in storage
+  // Store a newly created resource in storage
   router.post('/soups', create);
-  // // Update the specified resource in storage
+  // Update the specified resource in storage
   router.put('/soups/:id', update);
-  // // Remove the specified resource from storage
+  // Remove the specified resource from storage
   router.del('/soups/:id', destroy);
-  // // Star the specified resource
+  // Star the specified resource
   router.post('/soups/:id/star', star);
-  // // unStar the specified resource
+  // unStar the specified resource
   router.post('/soups/:id/unStar', unStar);
-  // // Get the star count of specified resource
+  // Get the star count of specified resource
   router.get('/soups/:id/starCount', starCount);
+  // Comment the specified resource
+  router.post('/soups/:id/comment', createComment);
+  // Get the comments of the specified resource
+  router.get('/soups/:id/comments', getComments)
+
 };

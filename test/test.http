@@ -45,7 +45,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDMyMTMwOH0.OwnvUO-kAn0VMVvH0nyD4CSwFLw_TWGoxpg7__vyt9A
 
 ### star a soup
-POST http://localhost:3000/soups/6/star
+POST http://localhost:3000/soups/3/star
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDMyMTMwOH0.OwnvUO-kAn0VMVvH0nyD4CSwFLw_TWGoxpg7__vyt9A
 
@@ -59,10 +59,35 @@ GET http://localhost:3000/soups/3/starCount
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDMyMTMwOH0.OwnvUO-kAn0VMVvH0nyD4CSwFLw_TWGoxpg7__vyt9A
 
-### get user star soups
-GET http://localhost:3000/users/11/starSoups
+
+### comment a soup
+POST http://localhost:3000/soups/2/comment
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDMyMTMwOH0.OwnvUO-kAn0VMVvH0nyD4CSwFLw_TWGoxpg7__vyt9A
+
+{
+  "content": "some comments for soup one"
+}
+
+
+### get the comments of a soup
+GET http://localhost:3000/soups/1/comments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDMyMTMwOH0.OwnvUO-kAn0VMVvH0nyD4CSwFLw_TWGoxpg7__vyt9A
+
+### get user star soups
+GET http://localhost:3000/users/11/starSoups?currentPage=1&perPage=100
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDMyMTMwOH0.OwnvUO-kAn0VMVvH0nyD4CSwFLw_TWGoxpg7__vyt9A
+
+
+
+
+
+
+
+
+
 
 ### test
 GET http://localhost:3000/test

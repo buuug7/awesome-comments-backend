@@ -3,15 +3,13 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToMany,
-  ManyToMany,
   BaseEntity,
-  getManager,
   createQueryBuilder
 } from 'typeorm';
 import { Soup } from './Soup';
 import { UserSoupStar } from './UserSoupStar';
-import { type } from 'os';
-import { simplePagination } from '../common/pagination';
+import { PaginationParam, simplePagination } from '../common/pagination';
+import { Comment } from './Comment';
 
 @Entity()
 export class User extends BaseEntity {
@@ -54,10 +52,13 @@ export class User extends BaseEntity {
   @OneToMany(type => Soup, soup => soup.user)
   soups: Soup[];
 
+  @OneToMany(type => Comment, comment => comment.user)
+  comments: Comment[];
+
   /**
    * get the soups of user already star
    */
-  public starSoups() {
+  public starSoups(paginationParam: PaginationParam) {
     const queryBuilder = createQueryBuilder(Soup)
       .leftJoinAndSelect('Soup.user', 'User')
       .innerJoinAndSelect(
@@ -67,6 +68,6 @@ export class User extends BaseEntity {
       )
       .where('UserSoupStar.userId = :userId', { userId: this.id });
 
-    return simplePagination(queryBuilder, {});
+    return simplePagination(queryBuilder, paginationParam);
   }
 }

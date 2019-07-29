@@ -1,17 +1,10 @@
-import {
-  getRepository,
-  Repository,
-  Like,
-  Between,
-  LessThan,
-  MoreThan,
-  createQueryBuilder
-} from 'typeorm';
+import { createQueryBuilder } from 'typeorm';
 import { Soup } from '../entity/Soup';
 import Koa from 'koa';
 import { User } from '../entity/User';
 import HttpStatus from 'http-status-codes';
 import { PaginationParam, simplePagination } from '../common/pagination';
+import { Comment } from '../entity/Comment';
 
 /**
  *
@@ -23,28 +16,28 @@ export async function list(ctx, next) {
 
   console.log(param);
 
-  const queryBuilder = createQueryBuilder(Soup).select();
+  const query = createQueryBuilder(Soup).select();
 
   if (param.search_content) {
-    queryBuilder.andWhere('content Like :content', {
+    query.andWhere('content Like :content', {
       content: `%${param.search_content}%`
     });
   }
 
   if (param.search_createdAtFrom && !param.search_createdAtTo) {
-    queryBuilder.andWhere('createdAt >= :createdAt', {
+    query.andWhere('createdAt >= :createdAt', {
       createdAt: param.search_createdAtFrom
     });
   }
 
   if (param.search_createdAtTo && !param.search_createdAtFrom) {
-    queryBuilder.andWhere('createdAt <= :createdAt', {
+    query.andWhere('createdAt <= :createdAt', {
       createdAt: param.search_createdAtTo
     });
   }
 
   if (param.search_createdAtFrom && param.search_createdAtTo) {
-    queryBuilder.andWhere('createdAt BETWEEN :createdAtFrom AND :createdAtTo', {
+    query.andWhere('createdAt BETWEEN :createdAtFrom AND :createdAtTo', {
       createdAtFrom: param.search_createdAtFrom,
       createdAtTo: param.search_createdAtTo
     });
@@ -53,12 +46,12 @@ export async function list(ctx, next) {
   if (param.search_user) {
     const user = await User.findOne({ name: param.search_user });
 
-    queryBuilder.andWhere('userId = :userId', {
+    query.andWhere('userId = :userId', {
       userId: user.id
     });
   }
 
-  ctx.body = await simplePagination(queryBuilder, param);
+  ctx.body = await simplePagination(query, param);
 }
 
 /**
@@ -111,7 +104,7 @@ export async function destroy(ctx, next) {
  * @return {object}
  */
 export async function star(ctx, next) {
-  const user: User = await User.findOneOrFail(ctx.state.user.id);
+  const user = ctx.state.user;
   const soup: Soup = await Soup.findOneOrFail(ctx.params.id);
 
   const isStar = await soup.isStarByGivenUser(user);
@@ -132,10 +125,9 @@ export async function star(ctx, next) {
  * return the star count number
  */
 export async function unStar(ctx, next) {
-  const user = await User.findOneOrFail(ctx.state.user.id);
   const soup = await Soup.findOneOrFail(ctx.params.id);
 
-  await soup.unStar(user);
+  await soup.unStar(ctx.state.user);
   ctx.body = {
     count: await soup.starCount()
   };
@@ -151,4 +143,35 @@ export async function starCount(ctx, next) {
   ctx.body = {
     count: await soup.starCount()
   };
+}
+
+/**
+ * comment on the specified resource
+ * POST /soups/:id/comment
+ * @param ctx
+ * @param next
+ */
+export async function createComment(ctx, next) {
+  const soup = await Soup.findOneOrFail(ctx.params.id);
+  const targetCommentId = ctx.request.body.targetCommentId;
+
+  let targetComment = targetCommentId
+    ? await Comment.findOneOrFail(targetCommentId)
+    : null;
+
+  ctx.body = await soup.createComment({
+    content: ctx.request.body.content,
+    user: ctx.state.user,
+    targetComment: targetComment
+  });
+}
+
+/**
+ * get the specified resource comments
+ * @param ctx
+ * @param next
+ */
+export async function getComments(ctx, next) {
+  const soup = await Soup.findOneOrFail(ctx.params.id);
+  ctx.body = await soup.comments(ctx.request.query);
 }
