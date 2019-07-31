@@ -10,16 +10,16 @@ Content-Type: application/json
 
 ### list soup
 GET http://localhost:3000/soups?currentPage=1&search_user=buuug7
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDMyMTMwOH0.OwnvUO-kAn0VMVvH0nyD4CSwFLw_TWGoxpg7__vyt9A
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ2NDc0NDUsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDU2MTA0NX0.aMKgLXg-9O0MORZeAipthjY4yU24JeyuaLAMDI3ljv4
 
 ### get one soup
 GET http://localhost:3000/soups/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDMyMTMwOH0.OwnvUO-kAn0VMVvH0nyD4CSwFLw_TWGoxpg7__vyt9A
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ2NDc0NDUsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDU2MTA0NX0.aMKgLXg-9O0MORZeAipthjY4yU24JeyuaLAMDI3ljv4
 
 ### create soup
 POST http://localhost:3000/soups
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDMyMTMwOH0.OwnvUO-kAn0VMVvH0nyD4CSwFLw_TWGoxpg7__vyt9A
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ2NDc0NDUsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDU2MTA0NX0.aMKgLXg-9O0MORZeAipthjY4yU24JeyuaLAMDI3ljv4
 
 {
   "content": "然而，TypeScript会认为这段代码可能存在bug。 对象字面量会被特殊对待而且会经过额外属性检查，当将它们赋值给变量或作为参数传递的时候。 如果一个对象字面量存在任何“目标类型”不包含的属性时，你会得到一个错误。",
@@ -33,7 +33,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3M
 
 PUT http://localhost:3000/soups/143434
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDMyMTMwOH0.OwnvUO-kAn0VMVvH0nyD4CSwFLw_TWGoxpg7__vyt9A
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ2NDc0NDUsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDU2MTA0NX0.aMKgLXg-9O0MORZeAipthjY4yU24JeyuaLAMDI3ljv4
 
 {
   "content": "such more useful clean my home"
@@ -42,28 +42,28 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3M
 ### Delete the soup
 DELETE http://localhost:3000/soups/13
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDMyMTMwOH0.OwnvUO-kAn0VMVvH0nyD4CSwFLw_TWGoxpg7__vyt9A
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ2NDc0NDUsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDU2MTA0NX0.aMKgLXg-9O0MORZeAipthjY4yU24JeyuaLAMDI3ljv4
 
 ### star a soup
 POST http://localhost:3000/soups/3/star
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDMyMTMwOH0.OwnvUO-kAn0VMVvH0nyD4CSwFLw_TWGoxpg7__vyt9A
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ2NDc0NDUsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDU2MTA0NX0.aMKgLXg-9O0MORZeAipthjY4yU24JeyuaLAMDI3ljv4
 
 ### unstar a soup
 POST http://localhost:3000/soups/3/unStar
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDMyMTMwOH0.OwnvUO-kAn0VMVvH0nyD4CSwFLw_TWGoxpg7__vyt9A
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ2NDc0NDUsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDU2MTA0NX0.aMKgLXg-9O0MORZeAipthjY4yU24JeyuaLAMDI3ljv4
 
 ### get soup star count
 GET http://localhost:3000/soups/3/starCount
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDMyMTMwOH0.OwnvUO-kAn0VMVvH0nyD4CSwFLw_TWGoxpg7__vyt9A
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ2NDc0NDUsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDU2MTA0NX0.aMKgLXg-9O0MORZeAipthjY4yU24JeyuaLAMDI3ljv4
 
 
 ### comment a soup
 POST http://localhost:3000/soups/2/comment
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDMyMTMwOH0.OwnvUO-kAn0VMVvH0nyD4CSwFLw_TWGoxpg7__vyt9A
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ2NDc0NDUsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDU2MTA0NX0.aMKgLXg-9O0MORZeAipthjY4yU24JeyuaLAMDI3ljv4
 
 {
   "content": "some comments for soup one"
@@ -73,25 +73,42 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3M
 ### get the comments of a soup
 GET http://localhost:3000/soups/1/comments
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDMyMTMwOH0.OwnvUO-kAn0VMVvH0nyD4CSwFLw_TWGoxpg7__vyt9A
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ2NDc0NDUsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDU2MTA0NX0.aMKgLXg-9O0MORZeAipthjY4yU24JeyuaLAMDI3ljv4
+
+
+###
+### COMMENT
+###
+
+
+### get a comment
+GET http://localhost:3000/comments/8/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ2NDc0NDUsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDU2MTA0NX0.aMKgLXg-9O0MORZeAipthjY4yU24JeyuaLAMDI3ljv4
+
+### reply a comment
+POST http://localhost:3000/comments/1/reply
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ2NDc0NDUsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDU2MTA0NX0.aMKgLXg-9O0MORZeAipthjY4yU24JeyuaLAMDI3ljv4
+
+{
+  "content": "some reply message"
+}
+
+
+###
+### USER
+###
 
 ### get user star soups
 GET http://localhost:3000/users/11/starSoups?currentPage=1&perPage=100
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDMyMTMwOH0.OwnvUO-kAn0VMVvH0nyD4CSwFLw_TWGoxpg7__vyt9A
-
-
-
-
-
-
-
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ2NDc0NDUsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDU2MTA0NX0.aMKgLXg-9O0MORZeAipthjY4yU24JeyuaLAMDI3ljv4
 
 
 ### test
 GET http://localhost:3000/test
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ0MDc3MDgsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDMyMTMwOH0.OwnvUO-kAn0VMVvH0nyD4CSwFLw_TWGoxpg7__vyt9A
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ2NDc0NDUsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDU2MTA0NX0.aMKgLXg-9O0MORZeAipthjY4yU24JeyuaLAMDI3ljv4
 
 ###

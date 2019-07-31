@@ -31,4 +31,19 @@ export class Comment extends BaseEntity {
 
   @Column()
   createdAt: Date;
+
+  async reply({ content, user }) {
+    const comment = Comment.create({
+      content: content,
+      user: user,
+      commentableType: this.commentableType,
+      commentableId: this.commentableId,
+      targetComment: this.id,
+      createdAt: new Date()
+    });
+
+    await comment.save();
+
+    return comment;
+  }
 }
