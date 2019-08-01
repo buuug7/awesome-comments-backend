@@ -2,13 +2,13 @@ import request from 'supertest';
 import app from '../src/app';
 import * as faker from 'faker';
 import dayjs from 'dayjs';
-import connection from '../src/common/database';
+import {databaseConnect} from '../src/common/database';
 
 describe('test SoupController', () => {
   let token;
 
   beforeAll(async () => {
-    await connection;
+    await databaseConnect();
     const response = await request(app.callback())
       .post('/public/auth')
       .send({
@@ -81,12 +81,8 @@ describe('test SoupController', () => {
     console.log(res.body);
 
     const response = await request(app.callback())
-      // @ts-ignore
       .delete('/soups/' + res.body.id)
       .set('Authorization', `Bearer ${token}`);
-
-    console.log(JSON.stringify(response.body));
-
     expect(response.status).toBe(200);
   });
 
@@ -117,4 +113,27 @@ describe('test SoupController', () => {
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('count');
   });
+
+  test('POST /soups/1/comment', async () => {
+    const response = await request(app.callback())
+      .post('/soups/1/comment')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        content: 'create from test case'
+      });
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('id');
+  });
+
+  test('GET /soups/1/comments', async () => {
+    const response = await request(app.callback())
+      .get('/soups/1/comments')
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('total');
+  });
+
+
+
 });

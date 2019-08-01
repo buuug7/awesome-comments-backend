@@ -95,13 +95,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ2NDc0N
   "content": "some reply message"
 }
 
-### star a comment
-POST http://localhost:3000/comments/1/star
+### unStar a comment
+POST http://localhost:3000/comments/1/unStar
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ2NDc0NDUsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDU2MTA0NX0.aMKgLXg-9O0MORZeAipthjY4yU24JeyuaLAMDI3ljv4
 
-### unStar a comment
-POST http://localhost:3000/comments/1/unStar
+### star a comment
+POST http://localhost:3000/comments/1/star
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjQ2NDc0NDUsIm5hbWUiOiJidXV1ZzciLCJlbWFpbCI6InlvdXBwQDEyNi5jb20iLCJpZCI6MTEsImlhdCI6MTU2NDU2MTA0NX0.aMKgLXg-9O0MORZeAipthjY4yU24JeyuaLAMDI3ljv4
 
