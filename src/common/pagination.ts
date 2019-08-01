@@ -19,6 +19,14 @@ export async function simplePagination(
   perPage = Number(perPage);
   currentPage = Number(currentPage);
 
+  if (currentPage <= 0) {
+    currentPage = 1;
+  }
+
+  if (perPage <= 0) {
+    perPage = 1;
+  }
+
   const totalPage =
     total % perPage === 0
       ? total / perPage

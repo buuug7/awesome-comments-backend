@@ -12,25 +12,23 @@ import {
 } from '../controllers/SoupController';
 
 export default router => {
-  // Get a listing of the resource
   router.get('/soups', list);
-  // Get the specified resource
-  router.get('/soups/:id', show);
-  // Store a newly created resource in storage
-  router.post('/soups', create);
-  // Update the specified resource in storage
-  router.put('/soups/:id', update);
-  // Remove the specified resource from storage
-  router.del('/soups/:id', destroy);
-  // Star the specified resource
-  router.post('/soups/:id/star', star);
-  // unStar the specified resource
-  router.post('/soups/:id/unStar', unStar);
-  // Get the star count of specified resource
-  router.get('/soups/:id/starCount', starCount);
-  // Comment the specified resource
-  router.post('/soups/:id/comment', createComment);
-  // Get the comments of the specified resource
-  router.get('/soups/:id/comments', getComments)
 
+  router.get('/soups/:id', show);
+
+  router.post('/soups', create);
+
+  router.put('/soups/:id', update);
+
+  router.del('/soups/:id', destroy);
+
+  router.post('/soups/:id/star', star);
+
+  router.post('/soups/:id/unStar', unStar);
+
+  router.get('/soups/:id/starCount', starCount);
+
+  router.post('/soups/:id/comment', createComment);
+
+  router.get('/soups/:id/comments', getComments)
 };

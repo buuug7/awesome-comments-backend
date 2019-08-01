@@ -1,10 +1,13 @@
 
 import Route from '@koa/router';
 
-import { starSoups, test } from '../controllers/UserController'
+import { starComments, starSoups, test } from '../controllers/UserController';
 
 export default router => {
 
   router.get('/users/:id/starSoups', starSoups);
+
+  router.get('/users/:id/starComments', starComments);
+
   router.get('/test', test);
 }
