@@ -7,8 +7,8 @@ import jwt from 'koa-jwt';
 import cors from '@koa/cors';
 import logger from 'koa-logger';
 import Router from '@koa/router';
-import connection from './common/database';
-import routers from './routes/router'
+import { databaseConnect } from './common/database';
+import appRouters from './routes/Router';
 
 const app = new Koa();
 const router = new Router();
@@ -42,16 +42,20 @@ app.use(cors());
 //jwt
 app.use(jwt({ secret: process.env.APP_KEY }).unless({ path: [/^\/public/] }));
 
-// router
-routers(router);
+// register application routers
+appRouters(router);
+
 app.use(router.routes());
 app.use(router.allowedMethods());
 
 // console.log(process.env.NODE_ENV);
 
 if (process.env.NODE_ENV !== 'test') {
-  connection
-    .then(() => app.listen(process.env.APP_PORT))
+  databaseConnect()
+    .then(() => {
+      app.listen(process.env.APP_PORT);
+      console.log('Application is running');
+    })
     .catch(error => console.log(error));
 }
 

@@ -36,14 +36,4 @@ example for photos resource router defined as below
 }
 ```
 
-## API return data structure
-
-wrapper you data into **data** field
-
-```json
-{
-  "data": {}
-}
-```
-
 ## default user `master@dev.com` only for test

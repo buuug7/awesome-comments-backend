@@ -93,8 +93,8 @@ export class Soup extends BaseEntity {
    * @param user
    */
   async isStarByGivenUser(user: User): Promise<boolean> {
-    const count = await createQueryBuilder(UserSoupStar, 'userSoupStar')
-      .where('userId = :userId AND soupId = :soupId', {
+    const count = await createQueryBuilder(UserSoupStar, 'UserSoupStar')
+      .where('UserSoupStar.userId = :userId AND UserSoupStar.soupId = :soupId', {
         userId: user.id,
         soupId: this.id
       })

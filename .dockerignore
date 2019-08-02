@@ -1,0 +1,12 @@
+docs
+node_modules
+src
+test
+.editorconfig
+.gitignore
+docker-dev-mysql.yml
+docker-compose.yml
+Dockerfile
+ormconfig.prod.js
+README.md
+tsconfig.json

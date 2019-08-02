@@ -2,11 +2,8 @@ import {
   BaseEntity,
   Column,
   Entity,
-  ManyToOne,
-  PrimaryColumn,
-  PrimaryGeneratedColumn
+  PrimaryColumn
 } from 'typeorm';
-import { User } from './User';
 import { Soup } from './Soup';
 
 

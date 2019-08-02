@@ -1,10 +1,10 @@
 import request from 'supertest';
 import app from '../src/app';
-import connection from '../src/common/database';
+import {databaseConnect} from '../src/common/database';
 
 describe('test authentication', () => {
   beforeAll(async () => {
-    await connection;
+    await databaseConnect();
   });
 
   test('POST /public/auth = with correct password', async () => {

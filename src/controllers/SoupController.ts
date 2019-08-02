@@ -168,6 +168,7 @@ export async function createComment(ctx, next) {
 
 /**
  * get the specified resource comments
+ * GET /soups/:id/comments
  * @param ctx
  * @param next
  */

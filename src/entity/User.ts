@@ -10,6 +10,7 @@ import { Soup } from './Soup';
 import { UserSoupStar } from './UserSoupStar';
 import { PaginationParam, simplePagination } from '../common/pagination';
 import { Comment } from './Comment';
+import { UserCommentStar } from './UserCommentStar';
 
 @Entity()
 export class User extends BaseEntity {
@@ -59,7 +60,7 @@ export class User extends BaseEntity {
    * get the soups of user already star
    */
   public starSoups(paginationParam: PaginationParam) {
-    const queryBuilder = createQueryBuilder(Soup)
+    const query = createQueryBuilder(Soup)
       .leftJoinAndSelect('Soup.user', 'User')
       .innerJoinAndSelect(
         UserSoupStar,
@@ -68,6 +69,23 @@ export class User extends BaseEntity {
       )
       .where('UserSoupStar.userId = :userId', { userId: this.id });
 
-    return simplePagination(queryBuilder, paginationParam);
+    return simplePagination(query, paginationParam);
+  }
+
+  /**
+   * get comments of specified user stared
+   * @param paginationParam
+   */
+  public starComments(paginationParam: PaginationParam) {
+    const query = createQueryBuilder(Comment)
+      .leftJoinAndSelect('Comment.user', 'User')
+      .innerJoinAndSelect(
+        UserCommentStar,
+        'UserCommentStar',
+        'UserCommentStar.commentId = Comment.id'
+      )
+      .where('UserCommentStar.userId = :userId', { userId: this.id });
+
+    return simplePagination(query, paginationParam);
   }
 }

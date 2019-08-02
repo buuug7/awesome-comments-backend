@@ -1,13 +1,13 @@
 import request from 'supertest';
 import app from '../src/app';
 import * as faker from 'faker';
-import connection from '../src/common/database';
+import {databaseConnect} from '../src/common/database';
 
 describe('test UserController', () => {
   let token;
 
   beforeAll(async () => {
-    await connection;
+    await databaseConnect();
     const response = await request(app.callback())
       .post('/public/auth')
       .send({
@@ -26,4 +26,13 @@ describe('test UserController', () => {
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('total');
   });
+
+  it('GET /users/11/starComments', async () => {
+    const response = await request(app.callback())
+      .get('/users/11/starComments')
+      .set('Authorization', `Bearer ${token}`)
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('total');
+  })
 });
