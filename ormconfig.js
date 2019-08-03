@@ -1,6 +1,6 @@
 module.exports = [
   {
-    name: 'prod',
+    name: 'default',
     type: 'mysql',
     host: 'localhost',
     port: 3306,
@@ -21,7 +21,7 @@ module.exports = [
     factories: ['src/factories/**/*.factory.ts']
   },
   {
-    name: 'default',
+    name: 'prod',
     type: 'mysql',
     host: 'soup-hub-mysql',
     port: 3306,

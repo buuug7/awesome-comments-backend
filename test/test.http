@@ -1,6 +1,6 @@
 
 ### auth user
-POST http://localhost:3000/public/auth
+POST http://localhost/public/auth
 Content-Type: application/json
 
 {

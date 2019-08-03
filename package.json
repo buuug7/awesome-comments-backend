@@ -9,7 +9,8 @@
     "prod": "node ./build/app.js",
     "test": "jest",
     "db-sync": "ts-node ./node_modules/typeorm/cli.js schema:sync",
-    "db-seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed --config ormconfig.js"
+    "db-seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed --config ormconfig.js",
+    "pretty": "pretty-quick"
   },
   "jest": {
     "testEnvironment": "node",
@@ -18,6 +19,11 @@
     ],
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
     }
   },
   "prettier": {
@@ -30,6 +36,7 @@
     "dayjs": "^1.8.15",
     "dotenv": "^6.2.0",
     "http-status-codes": "^1.3.2",
+    "husky": "^3.0.2",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.7.0",
     "koa-body": "^4.1.0",
@@ -38,6 +45,7 @@
     "koa-session": "^5.12.2",
     "mysql2": "^1.6.5",
     "node-fetch": "^2.3.0",
+    "pretty-quick": "^1.11.1",
     "reflect-metadata": "^0.1.10",
     "typeorm": "0.2.18"
   },
@@ -52,7 +60,7 @@
     "faker": "^4.1.0",
     "jest": "^24.8.0",
     "nodemon": "^1.19.1",
-    "prettier": "^1.16.4",
+    "prettier": "^1.18.2",
     "supertest": "^3.4.2",
     "ts-jest": "^24.0.2",
     "ts-node": "3.3.0",
