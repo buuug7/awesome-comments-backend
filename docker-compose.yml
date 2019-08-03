@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 services:
   mysql:
     container_name: soup-hub-mysql
@@ -23,7 +23,7 @@ services:
       restart_policy:
         condition: on-failure
     ports:
-      - 3000:3000
+      - 3001:3001
     networks:
       - webnet
 networks:

@@ -8,13 +8,13 @@ import {
   unStar,
   starCount,
   createComment,
-  getComments,
+  getComments
 } from '../controllers/SoupController';
 
 export default router => {
-  router.get('/soups', list);
+  router.get('/public/soups', list);
 
-  router.get('/soups/:id', show);
+  router.get('/public/soups/:id', show);
 
   router.post('/soups', create);
 
@@ -30,5 +30,5 @@ export default router => {
 
   router.post('/soups/:id/comment', createComment);
 
-  router.get('/soups/:id/comments', getComments)
+  router.get('/soups/:id/comments', getComments);
 };
