@@ -12,9 +12,9 @@ import {
 } from '../controllers/SoupController';
 
 export default router => {
-  router.get('/public/soups', list);
+  router.get('/soups', list);
 
-  router.get('/public/soups/:id', show);
+  router.get('/soups/:id', show);
 
   router.post('/soups', create);
 

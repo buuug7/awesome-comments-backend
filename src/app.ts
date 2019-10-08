@@ -8,10 +8,10 @@ import cors from '@koa/cors';
 import logger from 'koa-logger';
 import Router from '@koa/router';
 import { databaseConnect } from './common/database';
-import appRouters from './routes/Router';
+import appRouters from './routes/Index';
 
 const app = new Koa();
-const router = new Router();
+const router: Router = new Router();
 
 // @ts-ignore
 app.keys = [process.env.APP_KEY];
@@ -37,6 +37,7 @@ app.use(session(app));
 // body parse
 app.use(koaBody());
 
+// user cors
 app.use(cors());
 
 //jwt
@@ -50,6 +51,7 @@ app.use(router.allowedMethods());
 
 // console.log(process.env.NODE_ENV);
 
+// startup application server
 if (process.env.NODE_ENV !== 'test') {
   databaseConnect()
     .then(() => {
