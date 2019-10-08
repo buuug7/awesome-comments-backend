@@ -1,0 +1,136 @@
+### auth user
+POST {{baseUrl}}/public/auth
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+> {% client.global.set('token', response.body.token); %}
+
+### list soup
+GET {{baseUrl}}/public/soups?currentPage=1&search_user=buuug7
+Authorization: Bearer {{token}}
+
+### get one soup
+GET http://localhost:3001/soups/1
+Authorization: Bearer {{token}}
+
+### create soup
+POST http://localhost:3000/soups
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "content": "然而，TypeScript会认为这段代码可能存在bug。 对象字面量会被特殊对待而且会经过额外属性检查，当将它们赋值给变量或作为参数传递的时候。 如果一个对象字面量存在任何“目标类型”不包含的属性时，你会得到一个错误。",
+  "more": {
+    "reference": "https://github.com/buuug7",
+    "npm": "https://npmjs.com/buuug7"
+  }
+}
+
+### update soup
+
+PUT http://localhost:3000/soups/143434
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "content": "such more useful clean my home"
+}
+
+### Delete the soup
+DELETE http://localhost:3000/soups/13
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### star a soup
+POST http://localhost:3000/soups/3/star
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### unstar a soup
+POST http://localhost:3000/soups/3/unStar
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### get soup star count
+GET http://localhost:3000/soups/3/starCount
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### comment a soup
+POST http://localhost:3000/soups/2/comment
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "content": "some comments for soup one"
+}
+
+
+### get the comments of a soup
+GET http://localhost:3000/soups/1/comments
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+### COMMENT
+###
+
+### get a comment
+GET http://localhost:3000/comments/8/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### reply a comment
+POST http://localhost:3000/comments/2/reply
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "content": "some reply message"
+}
+
+### unStar a comment
+POST http://localhost:3000/comments/1/unStar
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### star a comment
+POST http://localhost:3000/comments/1/star
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### get the star of comment
+GET http://localhost:3000/comments/1/starCount
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### get the users of the comment stared
+GET http://localhost:3000/comments/1/starUsers?currentPage=2&perPage=0
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+### USER
+###
+
+### get user star soups
+GET http://localhost:3000/users/11/starSoups?currentPage=1&perPage=100
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+### get the comments of user stared
+GET http://localhost:3000/users/11/starComments?currentPage=1&perPage=100
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### test
+GET http://localhost:3000/test
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
