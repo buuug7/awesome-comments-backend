@@ -11,7 +11,9 @@ import { databaseConnect } from './common/database';
 import appRouters from './routes/Index';
 
 const app = new Koa();
-const router: Router = new Router();
+const router: Router = new Router({
+  prefix: '/api/v1'
+});
 
 // @ts-ignore
 app.keys = [process.env.APP_KEY];
@@ -41,7 +43,9 @@ app.use(koaBody());
 app.use(cors());
 
 //jwt
-app.use(jwt({ secret: process.env.APP_KEY }).unless({ path: [/^\/public/] }));
+app.use(
+  jwt({ secret: process.env.APP_KEY }).unless({ path: [/^\/api\/v1\/public/] })
+);
 
 // register application routers
 appRouters(router);

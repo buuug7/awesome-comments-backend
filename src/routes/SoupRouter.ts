@@ -12,9 +12,9 @@ import {
 } from '../controllers/SoupController';
 
 export default router => {
-  router.get('/soups', list);
+  router.get('/public/soups', list);
 
-  router.get('/soups/:id', show);
+  router.get('/public/soups/:id', show);
 
   router.post('/soups', create);
 
@@ -26,9 +26,9 @@ export default router => {
 
   router.post('/soups/:id/unStar', unStar);
 
-  router.get('/soups/:id/starCount', starCount);
+  router.get('/public/soups/:id/starCount', starCount);
 
   router.post('/soups/:id/comment', createComment);
 
-  router.get('/soups/:id/comments', getComments);
+  router.get('/public/soups/:id/comments', getComments);
 };
