@@ -14,11 +14,11 @@ GET {{baseUrl}}/public/soups?currentPage=1&search_user=buuug7
 Authorization: Bearer {{token}}
 
 ### get one soup
-GET http://localhost:3001/soups/1
+GET {{baseUrl}}/public/soups/1
 Authorization: Bearer {{token}}
 
 ### create soup
-POST http://localhost:3000/soups
+POST {{baseUrl}}/soups
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -32,7 +32,7 @@ Authorization: Bearer {{token}}
 
 ### update soup
 
-PUT http://localhost:3000/soups/143434
+PUT {{baseUrl}}/soups/143434
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -41,27 +41,27 @@ Authorization: Bearer {{token}}
 }
 
 ### Delete the soup
-DELETE http://localhost:3000/soups/13
+DELETE {{baseUrl}}/soups/13
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### star a soup
-POST http://localhost:3000/soups/3/star
+POST {{baseUrl}}/soups/3/star
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### unstar a soup
-POST http://localhost:3000/soups/3/unStar
+POST {{baseUrl}}/soups/3/unStar
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### get soup star count
-GET http://localhost:3000/soups/3/starCount
+GET {{baseUrl}}/soups/3/starCount
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### comment a soup
-POST http://localhost:3000/soups/2/comment
+POST {{baseUrl}}/soups/2/comment
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -71,7 +71,7 @@ Authorization: Bearer {{token}}
 
 
 ### get the comments of a soup
-GET http://localhost:3000/soups/1/comments
+GET {{baseUrl}}/soups/1/comments
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -80,12 +80,12 @@ Authorization: Bearer {{token}}
 ###
 
 ### get a comment
-GET http://localhost:3000/comments/8/
+GET {{baseUrl}}/comments/8/
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### reply a comment
-POST http://localhost:3000/comments/2/reply
+POST {{baseUrl}}/comments/2/reply
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -94,22 +94,22 @@ Authorization: Bearer {{token}}
 }
 
 ### unStar a comment
-POST http://localhost:3000/comments/1/unStar
+POST {{baseUrl}}/comments/1/unStar
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### star a comment
-POST http://localhost:3000/comments/1/star
+POST {{baseUrl}}/comments/1/star
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### get the star of comment
-GET http://localhost:3000/comments/1/starCount
+GET {{baseUrl}}/comments/1/starCount
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### get the users of the comment stared
-GET http://localhost:3000/comments/1/starUsers?currentPage=2&perPage=0
+GET {{baseUrl}}/comments/1/starUsers?currentPage=2&perPage=0
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -118,18 +118,18 @@ Authorization: Bearer {{token}}
 ###
 
 ### get user star soups
-GET http://localhost:3000/users/11/starSoups?currentPage=1&perPage=100
+GET {{baseUrl}}/users/11/starSoups?currentPage=1&perPage=100
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 
 ### get the comments of user stared
-GET http://localhost:3000/users/11/starComments?currentPage=1&perPage=100
+GET {{baseUrl}}/users/11/starComments?currentPage=1&perPage=100
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### test
-GET http://localhost:3000/test
+GET {{baseUrl}}/test
 Content-Type: application/json
 Authorization: Bearer {{token}}
 

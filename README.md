@@ -11,6 +11,9 @@ An application where collect and share awesome soups. this repository is the ser
 - `npm run start` start you work
 - the `test/Api.http` show the whole api
 
+sync database with typeOrm schema: `npm run db-sync`
+seed the database with mock data: `npm run db-seed`
+
 ## production
 
 - run `npm run build`
