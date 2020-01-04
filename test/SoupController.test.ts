@@ -2,7 +2,9 @@ import request from 'supertest';
 import app from '../src/app';
 import * as faker from 'faker';
 import dayjs from 'dayjs';
-import {databaseConnect} from '../src/common/database';
+import { databaseConnect } from '../src/common/database';
+
+const apiPrefix = '/api/v1';
 
 describe('test SoupController', () => {
   let token;
@@ -10,7 +12,7 @@ describe('test SoupController', () => {
   beforeAll(async () => {
     await databaseConnect();
     const response = await request(app.callback())
-      .post('/public/auth')
+      .post(`${apiPrefix}/public/auth`)
       .send({
         email: 'youpp@126.com',
         password: '111111'
@@ -20,7 +22,7 @@ describe('test SoupController', () => {
 
   test('GET /soups', async () => {
     const response = await request(app.callback())
-      .get('/soups')
+      .get(`${apiPrefix}/public/soups`)
       .set('Authorization', `Bearer ${token}`);
 
     console.log(response.body);
@@ -32,7 +34,7 @@ describe('test SoupController', () => {
 
   test('GET /soups/:id', async () => {
     const response = await request(app.callback())
-      .get('/soups/1')
+      .get(`${apiPrefix}/public/soups/1`)
       .set('Authorization', `Bearer ${token}`);
 
     console.log(JSON.stringify(response.body));
@@ -43,7 +45,7 @@ describe('test SoupController', () => {
 
   test('POST /soups', async () => {
     const response = await request(app.callback())
-      .post('/soups')
+      .post(`${apiPrefix}/soups`)
       .set('Authorization', `Bearer ${token}`)
       .send({
         content: faker.lorem.paragraph()
@@ -55,7 +57,7 @@ describe('test SoupController', () => {
 
   test('PUT /soups/:id', async () => {
     const response = await request(app.callback())
-      .put('/soups/1')
+      .put(`${apiPrefix}/soups/1`)
       .set('Authorization', `Bearer ${token}`)
       .send({
         content: 'from test2'
@@ -68,8 +70,8 @@ describe('test SoupController', () => {
 
   test('DELETE /soups/:id', async () => {
     const firstCreate = async () => {
-      return  request(app.callback())
-        .post('/soups')
+      return request(app.callback())
+        .post(`${apiPrefix}/soups`)
         .set('Authorization', `Bearer ${token}`)
         .send({
           content: 'created from test delete test'
@@ -81,14 +83,14 @@ describe('test SoupController', () => {
     console.log(res.body);
 
     const response = await request(app.callback())
-      .delete('/soups/' + res.body.id)
+      .delete(`${apiPrefix}/soups/` + res.body.id)
       .set('Authorization', `Bearer ${token}`);
     expect(response.status).toBe(200);
   });
 
   test('POST /soups/:id/unStar', async () => {
     const response = await request(app.callback())
-      .post('/soups/1/unStar')
+      .post(`${apiPrefix}/soups/1/unStar`)
       .set('Authorization', `Bearer ${token}`);
     console.log(JSON.stringify(response.body));
     expect(response.status).toBe(200);
@@ -97,7 +99,7 @@ describe('test SoupController', () => {
 
   test('POST /soups/:id/star', async () => {
     const response = await request(app.callback())
-      .post('/soups/1/star')
+      .post(`${apiPrefix}/soups/1/star`)
       .set('Authorization', `Bearer ${token}`);
 
     console.log(JSON.stringify(response.body));
@@ -107,7 +109,7 @@ describe('test SoupController', () => {
 
   test('GET /soups/:id/starCount', async () => {
     const response = await request(app.callback())
-      .get('/soups/1/starCount')
+      .get(`${apiPrefix}/public/soups/1/starCount`)
       .set('Authorization', `Bearer ${token}`);
     console.log(JSON.stringify(response.body));
     expect(response.status).toBe(200);
@@ -116,7 +118,7 @@ describe('test SoupController', () => {
 
   test('POST /soups/1/comment', async () => {
     const response = await request(app.callback())
-      .post('/soups/1/comment')
+      .post(`${apiPrefix}/soups/1/comment`)
       .set('Authorization', `Bearer ${token}`)
       .send({
         content: 'create from test case'
@@ -127,13 +129,10 @@ describe('test SoupController', () => {
 
   test('GET /soups/1/comments', async () => {
     const response = await request(app.callback())
-      .get('/soups/1/comments')
+      .get(`${apiPrefix}/public/soups/1/comments`)
       .set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('total');
   });
-
-
-
 });

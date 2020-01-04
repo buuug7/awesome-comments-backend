@@ -1,7 +1,9 @@
 import request from 'supertest';
 import app from '../src/app';
 import * as faker from 'faker';
-import {databaseConnect} from '../src/common/database';
+import { databaseConnect } from '../src/common/database';
+
+const apiPrefix = '/api/v1';
 
 describe('test UserController', () => {
   let token;
@@ -9,7 +11,7 @@ describe('test UserController', () => {
   beforeAll(async () => {
     await databaseConnect();
     const response = await request(app.callback())
-      .post('/public/auth')
+      .post(`${apiPrefix}/public/auth`)
       .send({
         email: 'youpp@126.com',
         password: '111111'
@@ -20,7 +22,7 @@ describe('test UserController', () => {
 
   it('GET /users/11/starSoups', async () => {
     const response = await request(app.callback())
-      .get('/users/11/starSoups')
+      .get(`${apiPrefix}/users/11/starSoups`)
       .set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(200);
@@ -29,10 +31,10 @@ describe('test UserController', () => {
 
   it('GET /users/11/starComments', async () => {
     const response = await request(app.callback())
-      .get('/users/11/starComments')
-      .set('Authorization', `Bearer ${token}`)
+      .get(`${apiPrefix}/users/11/starComments`)
+      .set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('total');
-  })
+  });
 });

@@ -56,7 +56,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### get soup star count
-GET {{baseUrl}}/soups/3/starCount
+GET {{baseUrl}}/public/soups/3/starCount
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -71,7 +71,7 @@ Authorization: Bearer {{token}}
 
 
 ### get the comments of a soup
-GET {{baseUrl}}/soups/1/comments
+GET {{baseUrl}}/public/soups/2/comments
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -80,12 +80,12 @@ Authorization: Bearer {{token}}
 ###
 
 ### get a comment
-GET {{baseUrl}}/comments/8/
+GET {{baseUrl}}/comments/1/
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### reply a comment
-POST {{baseUrl}}/comments/2/reply
+POST {{baseUrl}}/comments/1/reply
 Content-Type: application/json
 Authorization: Bearer {{token}}
 

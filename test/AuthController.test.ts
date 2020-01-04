@@ -1,6 +1,8 @@
 import request from 'supertest';
 import app from '../src/app';
-import {databaseConnect} from '../src/common/database';
+import { databaseConnect } from '../src/common/database';
+
+const apiPrefix = '/api/v1';
 
 describe('test authentication', () => {
   beforeAll(async () => {
@@ -9,7 +11,7 @@ describe('test authentication', () => {
 
   test('POST /public/auth = with correct password', async () => {
     const response = await request(app.callback())
-      .post('/public/auth')
+      .post(`${apiPrefix}/public/auth`)
       .send({
         email: 'youpp@126.com',
         password: '111111'
@@ -21,7 +23,7 @@ describe('test authentication', () => {
 
   test('POST /public/auth = with wrong password', async () => {
     const response = await request(app.callback())
-      .post('/public/auth')
+      .post(`${apiPrefix}/public/auth`)
       .send({
         email: 'youpp@126.com',
         password: '2222'
@@ -32,7 +34,7 @@ describe('test authentication', () => {
 
   test('POST /public/auth = with wrong email and password', async () => {
     const response = await request(app.callback())
-      .post('/public/auth')
+      .post(`${apiPrefix}/public/auth`)
       .send({
         email: 'notExistsEmail@google.com',
         password: 'anything'
